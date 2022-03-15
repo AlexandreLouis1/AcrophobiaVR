@@ -1,0 +1,6 @@
+   ...............................Classic Downtown start guideline......................
+
+To create your own city scene start with the folder named "Road and Sideways" in MODELS or PREFABS folder.Drag and drop different road model or prefabs and then place sidewalk model or prefab accordingly.In this case please use snap toogle(vertex to vertex) to seam them correctly.Allongside of side walk place floor as your need.Use buildings and different props to decorate and design the scene. 
+overpass has no ground connection and the car has no scripts as they are for decorating purpose only.
+A demo scene is included as example.
+For other quaries contact at:meshlabstudio@gmail.com
