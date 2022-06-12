@@ -9,7 +9,7 @@ public class CabinControlPanel : MonoBehaviour
 
     Transform lastButtonActivated;
 
-    private void Start()
+    private void Awake()
     {
         lastButtonActivated = cabinControlPanel.transform.GetChild(0);
         lastButtonActivated.GetComponentInChildren<Animator>().SetBool("isOn", true);

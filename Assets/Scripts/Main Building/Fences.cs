@@ -12,7 +12,7 @@ public class Fences : MonoBehaviour
 
     private Animator fenceAnim;
 
-    private void Start()
+    private void Awake()
     {
         fenceAnim = fenceRotationPoint.GetComponentInChildren<Animator>();
     }
@@ -30,7 +30,7 @@ public class Fences : MonoBehaviour
 
             gameManager.isFenceFullShowing = true;
 
-            gameManager.StartCoroutine("WaitingTime", 1);
+            gameManager.StartCoroutine("ToggleInteractionWaintingTime", 1);
         }
     }
 
@@ -41,7 +41,7 @@ public class Fences : MonoBehaviour
 
         gameManager.isFenceFullShowing = false;
 
-        gameManager.StartCoroutine("WaitingTime", 1);
+        gameManager.StartCoroutine("ToggleInteractionWaintingTime", 1);
     }
 
     public void HideFence()
@@ -51,7 +51,7 @@ public class Fences : MonoBehaviour
 
         gameManager.isFenceFullShowing = false;
 
-        gameManager.StartCoroutine("WaitingTime", 1);
+        gameManager.StartCoroutine("ToggleInteractionWaintingTime", 1);
     }
 
     public void FenceAction()

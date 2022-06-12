@@ -12,7 +12,7 @@ public class Plank : MonoBehaviour
     private Animator plankAnim;
     private AudioSource audioSource;
 
-    private void Start()
+    private void Awake()
     {
         plankAnim = plank.gameObject.GetComponent<Animator>();
         audioSource = plank.gameObject.GetComponent<AudioSource>();
@@ -48,7 +48,7 @@ public class Plank : MonoBehaviour
             {
                 gameManager.isPlankActive = true;
             }
-            gameManager.StartCoroutine("WaitingTime", 2);
+            gameManager.StartCoroutine("ToggleInteractionWaintingTime", 2);
         }
     }  
 

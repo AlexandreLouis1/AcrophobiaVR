@@ -12,7 +12,7 @@ public class ControlPanel : MonoBehaviour
     private GameObject lightFenceToggle;
     private GameObject fullFenceToggle;
 
-    void Start()
+    void Awake()
     {
         plankToggle = GameObject.Find("Toggle Plank");
         emptyFenceToggle = GameObject.Find("Toggle Empty");

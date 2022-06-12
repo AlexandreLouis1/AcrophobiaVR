@@ -585,6 +585,14 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "SafeZoneHold",
+                    "type": "Button",
+                    "id": "a1364a6e-8c2c-4fe5-a6ff-9574fcf0a287",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -895,6 +903,17 @@
                     "action": "Translate Anchor",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "58d1ba98-2901-4cf1-8523-0a7b54a7156e",
+                    "path": "<OculusTouchController>{RightHand}/gripPressed",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "SafeZoneHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

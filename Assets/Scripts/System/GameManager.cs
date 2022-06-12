@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    static public GameManager Instance;
-
     public GameObject elevator;
     public GameObject balcony;
+    public GameObject fader;
+    public GameObject controlPanel;
 
     public Toggle[] toggleList;
 
@@ -20,24 +20,37 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip elevatorDoorClose;
     private AudioSource elevatorDoorAudio;
 
+    public GameObject locomotionSystem;
+
     public bool waiting = false;
     public bool isFenceFullShowing = true;
     public bool isPlankActive = false;
     public bool isFencesOpen = false;
 
+    public bool safeMode = true;
+    public bool isInputEnabled = false;
+
     public int numOfFloor;
 
     private void Start()
     {
+        locomotionSystem.SetActive(false);
         doorAnim = elevator.gameObject.GetComponent<Animator>();
         elevatorDoorAudio = elevator.gameObject.GetComponentInChildren<AudioSource>();
         balconyMovement = balcony.GetComponent<Balcony>();
         toggleList = FindObjectsOfType<Toggle>();
 
-        StartCoroutine("WaitingTime", 2);
+        StartCoroutine("Starting", 3);
     }
 
-    private IEnumerator WaitingTime(int timeToWait)
+    public IEnumerator Starting(int timeToWait)
+    {
+        yield return new WaitForSeconds(timeToWait);
+
+        isInputEnabled = true;
+    }
+
+    private IEnumerator ToggleInteractionWaintingTime(int timeToWait)
     {
         foreach (Toggle toggle in toggleList)
         {
