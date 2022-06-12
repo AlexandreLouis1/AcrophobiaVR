@@ -12,6 +12,8 @@ public class Plank : MonoBehaviour
     private Animator plankAnim;
     private AudioSource audioSource;
 
+    public bool isPlankActive = false;
+
     private void Awake()
     {
         plankAnim = plank.gameObject.GetComponent<Animator>();
@@ -20,7 +22,7 @@ public class Plank : MonoBehaviour
 
     public void PlankAction()
     {
-        if (gameManager.isFenceFullShowing)
+        if (gameManager.balcony.GetComponent<Fences>().isFenceFullShowing)
         {
             Debug.LogError("Activez les barrières.");
         }
@@ -40,13 +42,13 @@ public class Plank : MonoBehaviour
 
             fences.GetComponent<Fences>().FenceAction();
 
-            if (gameManager.isPlankActive)
+            if (isPlankActive)
             {
-                gameManager.isPlankActive = false;
+                isPlankActive = false;
             }
             else
             {
-                gameManager.isPlankActive = true;
+                isPlankActive = true;
             }
             gameManager.StartCoroutine("ToggleInteractionWaintingTime", 2);
         }

@@ -12,6 +12,9 @@ public class Fences : MonoBehaviour
 
     private Animator fenceAnim;
 
+    public bool isFenceFullShowing = true;
+    public bool isFencesOpen = false;
+
     private void Awake()
     {
         fenceAnim = fenceRotationPoint.GetComponentInChildren<Animator>();
@@ -19,7 +22,7 @@ public class Fences : MonoBehaviour
 
     public void ShowFenceFull()
     {
-        if (gameManager.isPlankActive)
+        if (gameManager.balcony.GetComponent<Plank>().isPlankActive)
         {
             Debug.LogError("Ramenez d'abord la planche.");
         }
@@ -28,7 +31,7 @@ public class Fences : MonoBehaviour
             fenceFull.gameObject.SetActive(true);
             fenceLight.gameObject.SetActive(false);
 
-            gameManager.isFenceFullShowing = true;
+            isFenceFullShowing = true;
 
             gameManager.StartCoroutine("ToggleInteractionWaintingTime", 1);
         }
@@ -39,7 +42,7 @@ public class Fences : MonoBehaviour
         fenceLight.gameObject.SetActive(true);
         fenceFull.gameObject.SetActive(false);
 
-        gameManager.isFenceFullShowing = false;
+        isFenceFullShowing = false;
 
         gameManager.StartCoroutine("ToggleInteractionWaintingTime", 1);
     }
@@ -49,22 +52,22 @@ public class Fences : MonoBehaviour
         fenceLight.gameObject.SetActive(false);
         fenceFull.gameObject.SetActive(false);
 
-        gameManager.isFenceFullShowing = false;
+        isFenceFullShowing = false;
 
         gameManager.StartCoroutine("ToggleInteractionWaintingTime", 1);
     }
 
     public void FenceAction()
     {
-        if (gameManager.isFencesOpen)
+        if (isFencesOpen)
         {
             fenceAnim.SetBool("isOpen", false);
-            gameManager.isFencesOpen = false;
+            isFencesOpen = false;
         }
         else
         {
             fenceAnim.SetBool("isOpen", true);
-            gameManager.isFencesOpen = true;
+            isFencesOpen = true;
         }
     }
 }

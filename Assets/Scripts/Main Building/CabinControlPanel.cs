@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class CabinControlPanel : MonoBehaviour
 {
-    [SerializeField] GameObject cabinControlPanel;
-    [SerializeField] GameObject gameManager;
-
     Transform lastButtonActivated;
 
     private void Awake()
     {
-        lastButtonActivated = cabinControlPanel.transform.GetChild(0);
+        lastButtonActivated = transform.GetChild(0);
         lastButtonActivated.GetComponentInChildren<Animator>().SetBool("isOn", true);
     }
 
@@ -19,7 +16,9 @@ public class CabinControlPanel : MonoBehaviour
     {
         lastButtonActivated.GetComponentInChildren<Animator>().SetBool("isOn", false);
         button.GetComponent<Animator>().SetBool("isOn", true);
+
         lastButtonActivated = button;
-        gameManager.GetComponent<GameManager>().ChangeFloor(button.parent.GetSiblingIndex());
+
+        gameObject.GetComponentInParent<Balcony>().ChangeFloor(button.parent.GetSiblingIndex());
     }
 }
