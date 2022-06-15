@@ -4,29 +4,23 @@ using UnityEngine;
 
 public class Plank : MonoBehaviour
 {
-    [SerializeField] GameObject plank;
-    [SerializeField] GameObject fences;
+    [SerializeField] GameObject balcony;
 
-    [SerializeField] GameManager gameManager;
-
-    private Animator plankAnim;
+    public Animator plankAnim;
     private AudioSource audioSource;
-
-    public bool isPlankActive = false;
 
     private void Awake()
     {
-        plankAnim = plank.gameObject.GetComponent<Animator>();
-        audioSource = plank.gameObject.GetComponent<AudioSource>();
+        plankAnim = gameObject.GetComponent<Animator>();
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     public void PlankAction()
     {
-        if (gameManager.balcony.GetComponent<Fences>().isFenceFullShowing)
+        if (balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().fenceFull.activeSelf)
         {
-            Debug.LogError("Activez les barrières.");
+            Debug.LogError("Changez de type de balcon pour pouvoir utiliser la planche");
         }
-
         else
         {
             if (plankAnim.GetBool("isOpen") == true)
@@ -40,22 +34,12 @@ public class Plank : MonoBehaviour
                 plankAnim.SetBool("isOpen", true);
             }
 
-            fences.GetComponent<Fences>().FenceAction();
-
-            if (isPlankActive)
-            {
-                isPlankActive = false;
-            }
-            else
-            {
-                isPlankActive = true;
-            }
-            gameManager.StartCoroutine("ToggleInteractionWaintingTime", 2);
+            balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().FenceAction();
         }
     }  
 
     public void ChangeSize(float newSize)
     {
-        plank.gameObject.transform.localScale = new Vector3(newSize, plank.gameObject.transform.localScale.y, plank.gameObject.transform.localScale.z);
+        balcony.GetComponent<Plank>().gameObject.transform.localScale = new Vector3(newSize, balcony.GetComponent<Plank>().gameObject.transform.localScale.y, balcony.GetComponent<Plank>().gameObject.transform.localScale.z);
     }
 }

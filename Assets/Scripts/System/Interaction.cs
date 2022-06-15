@@ -7,15 +7,16 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Interaction : MonoBehaviour
 {
     private float waitingTime = 2f;
+    private int fenceType;
 
-    [SerializeField] private InputActionReference activate;
-    [SerializeField] private InputActionReference select;
-    [SerializeField] private InputActionReference handGrip;
+    [SerializeField] InputActionReference activate;
+    [SerializeField] InputActionReference select;
+    [SerializeField] InputActionReference handGrip;
 
-    [SerializeField] private XRRayInteractor _RayInteractor;
+    [SerializeField] XRRayInteractor _RayInteractor;
     [SerializeField] Canvas menu;
-    [SerializeField] GameObject controlPanel;
-    [SerializeField] private GameManager gameManager;
+    [SerializeField] GameObject balcony;
+    [SerializeField] GameManager gameManager;
 
 
     void Awake()
@@ -27,6 +28,8 @@ public class Interaction : MonoBehaviour
         gameManager = gameManager.GetComponent<GameManager>();
     }
 
+         ////////////////////// CONTROLLER INPUTS //////////////////////////
+
     private void SafeZoneActivation(InputAction.CallbackContext obj)
     {
         if (gameManager.fader.GetComponent<Fader>().newColor2.a == 1)
@@ -37,21 +40,17 @@ public class Interaction : MonoBehaviour
         {
             gameManager.fader.GetComponent<Fader>().FadeIn();
         }
-        Debug.Log(gameManager.fader.GetComponent<Fader>().newColor2.a);
     }
 
     private void ButtonAction(InputAction.CallbackContext obj)
     {
-        if(!gameManager.safeMode)
+        if (_RayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit ray))
         {
-            if (_RayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit ray))
+            if (ray.transform.name == "Button")
             {
-                if (ray.transform.name == "Button")
+                if (ray.transform.GetComponent<Animator>().GetBool("isOn") == false)
                 {
-                    if (ray.transform.GetComponent<Animator>().GetBool("isOn") == false)
-                    {
-                        ray.transform.GetComponentInParent<CabinControlPanel>().ButtonActivation(ray.transform);
-                    }
+                    ray.transform.GetComponentInParent<CabinControlPanel>().ButtonActivation(ray.transform);
                 }
             }
         }
@@ -72,111 +71,114 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    private IEnumerator ChangeFloorFromKeyboard(float waitingTime, int floorNumber)
-    {
-        gameManager.isInputEnabled = false;
-
-        gameManager.fader.GetComponent<Fader>().FadeIn();
-        yield return new WaitForSeconds(waitingTime);
-
-        gameManager.balcony.GetComponent<Balcony>().SelectFloor(floorNumber);
-
-        gameManager.fader.GetComponent<Fader>().FadeOut();
-        yield return new WaitForSeconds(waitingTime+waitingTime/2);
-
-        gameManager.isInputEnabled = true;
-    }
-
-    private void SafeModeActivation()
-    {
-        if (gameManager.safeMode)
-        {
-            gameManager.safeMode = false;
-            gameManager.locomotionSystem.gameObject.SetActive(true);
-            gameManager.controlPanel.SetActive(false);
-            Debug.Log("Disable safe mode");
-        }
-        else
-        {
-            gameManager.safeMode = true;
-            gameManager.locomotionSystem.gameObject.SetActive(false);
-            gameManager.controlPanel.SetActive(true);
-            Debug.Log("Enable safe mode");
-        }
-    }
-
     private void Update()
     {
-        if (Input.GetKeyDown("0") && gameManager.isInputEnabled)
-        {
-            StartCoroutine(ChangeFloorFromKeyboard(waitingTime, 0));
-        }
-        if (Input.GetKeyDown("1") && gameManager.isInputEnabled)
-        {
-            StartCoroutine(ChangeFloorFromKeyboard(waitingTime, 1));
-        }
-        if (Input.GetKeyDown("2") && gameManager.isInputEnabled)
-        {
-            StartCoroutine(ChangeFloorFromKeyboard(waitingTime, 2));
-        }
-        if (Input.GetKeyDown("3") && gameManager.isInputEnabled)
-        {
-            StartCoroutine(ChangeFloorFromKeyboard(waitingTime, 3));
-        }
-        if (Input.GetKeyDown("4") && gameManager.isInputEnabled)
-        {
-            StartCoroutine(ChangeFloorFromKeyboard(waitingTime, 4));
-        }
-        if (Input.GetKeyDown("5") && gameManager.isInputEnabled)
-        {
-            StartCoroutine(ChangeFloorFromKeyboard(waitingTime, 5));
-        }
-        if (Input.GetKeyDown("6") && gameManager.isInputEnabled)
-        {
-            StartCoroutine(ChangeFloorFromKeyboard(waitingTime, 6));
-        }
-        if (Input.GetKeyDown("7") && gameManager.isInputEnabled)
-        {
-            StartCoroutine(ChangeFloorFromKeyboard(waitingTime, 7));
-        }
-        if (Input.GetKeyDown("8") && gameManager.isInputEnabled)
-        {
-            StartCoroutine(ChangeFloorFromKeyboard(waitingTime, 8));
-        }
-        if (Input.GetKeyDown("9") && gameManager.isInputEnabled)
-        {
-            StartCoroutine(ChangeFloorFromKeyboard(waitingTime, 9));
-        }
+            ////////////////////// KEYBOARD INPUTS //////////////////////////
+            ///
 
-        if (Input.GetKeyDown("m"))
+        if (gameManager.isInputEnabled)
         {
-            if (controlPanel.activeSelf)
+            // SAFE MODE
+
+            if (Input.GetKeyDown("s"))
             {
-                controlPanel.SetActive(false);
+                gameManager.SafeModeActivation();
             }
-            else
+
+            if (gameManager.safeMode)
             {
-                controlPanel.SetActive(true);
+                // FLOOR SELECTION
+                if (Input.GetKeyDown("0"))
+                {
+                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 0));
+                }
+                if (Input.GetKeyDown("1"))
+                {
+                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 1));
+                }
+                if (Input.GetKeyDown("2"))
+                {
+                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 2));
+                }
+                if (Input.GetKeyDown("3"))
+                {
+                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 3));
+                }
+                if (Input.GetKeyDown("4"))
+                {
+                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 4));
+                }
+                if (Input.GetKeyDown("5"))
+                {
+                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 5));
+                }
+                if (Input.GetKeyDown("6"))
+                {
+                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 6));
+                }
+                if (Input.GetKeyDown("7"))
+                {
+                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 7));
+                }
+                if (Input.GetKeyDown("8"))
+                {
+                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 8));
+                }
+                if (Input.GetKeyDown("9"))
+                {
+                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 9));
+                }
+
+                // FENCE
+                //SHOW FULL FENCE
+                if (Input.GetKeyDown("a"))
+                {
+                    fenceType = 0;
+                    if (balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().CheckFenceState(fenceType))
+                    {
+                        StartCoroutine(gameManager.ChangeFenceFromKeyboard(waitingTime, fenceType));
+                    }
+                    else
+                    {
+                        Debug.LogError("Full fence already shown");
+                    }
+                }
+
+                //SHOW LIGHT FENCE
+                if (Input.GetKeyDown("z"))
+                {
+                    fenceType = 1;
+                    if (balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().CheckFenceState(fenceType))
+                    {
+                        StartCoroutine(gameManager.ChangeFenceFromKeyboard(waitingTime, fenceType));
+                    }
+                    else
+                    {
+                        Debug.LogError("Light fence already shown");
+                    }
+                }
+
+                //HIDE FENCE
+                if (Input.GetKeyDown("e"))
+                {
+                    fenceType = 2;
+                    if (balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().CheckFenceState(fenceType))
+                    {
+                        StartCoroutine(gameManager.ChangeFenceFromKeyboard(waitingTime, fenceType));
+                    }
+                    else
+                    {
+                        Debug.LogError("Fence already hidden");
+                    }
+                }
+
+                // PLANK
+                if (Input.GetKeyDown("p"))
+                {
+                    StartCoroutine(gameManager.ActivePlankFromKeyboard(waitingTime));
+                }
             }
-        }
-
-        if (Input.GetKeyDown("s"))
-        {
-            SafeModeActivation();
-        }
-
-        if (Input.GetKeyDown("a"))
-        {
-
-        }
-        if (Input.GetKeyDown("z"))
-        {
-
-        }
-        if (Input.GetKeyDown("e"))
-        {
-
-        }
+        } 
     }
 }
     

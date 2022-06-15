@@ -8,42 +8,113 @@ public class GameManager : MonoBehaviour
     public GameObject balcony;
     public GameObject fader;
     public GameObject controlPanel;
-
-    public Toggle[] toggleList;
-
     public GameObject locomotionSystem;
 
     public bool waiting = false;
     public bool safeMode = true;
-    public bool isInputEnabled = false;
+    public bool isInputEnabled = true;
 
-    private void Start()
+    public IEnumerator ChangeFloorFromKeyboard(float waitingTime, int floorNumber)
     {
-        locomotionSystem.SetActive(false);
-        toggleList = FindObjectsOfType<Toggle>();
+        isInputEnabled = false;
 
-        StartCoroutine("Starting", 3);
-    }
+        fader.GetComponent<Fader>().FadeIn();
+        yield return new WaitForSeconds(waitingTime);
 
-    public IEnumerator Starting(int timeToWait)
-    {
-        yield return new WaitForSeconds(timeToWait);
+        balcony.GetComponent<Balcony>().SelectFloor(floorNumber);
+
+        fader.GetComponent<Fader>().FadeOut();
+        yield return new WaitForSeconds(waitingTime + waitingTime / 2);
 
         isInputEnabled = true;
     }
 
-    private IEnumerator ToggleInteractionWaintingTime(int timeToWait)
+    public IEnumerator ChangeFenceFromKeyboard(float waitingTime, int fenceType)
     {
-        foreach (Toggle toggle in toggleList)
+        isInputEnabled = false;
+
+        fader.GetComponent<Fader>().FadeIn();
+        yield return new WaitForSeconds(waitingTime);
+
+        switch (fenceType)
         {
-            toggle.interactable = false;
+            case 0:
+                {
+                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().ShowFenceFull();
+                    break;
+                }
+            case 1:
+                {
+                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().ShowFenceLight();
+                    break;
+                }
+            case 2:
+                {
+                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().HideFence();
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
         }
 
-        yield return new WaitForSeconds(timeToWait);
+        fader.GetComponent<Fader>().FadeOut();
+        yield return new WaitForSeconds(waitingTime + waitingTime / 2);
 
-        foreach (Toggle toggle in toggleList)
+        isInputEnabled = true;
+    }
+
+    public IEnumerator ActivePlankFromKeyboard(float waitingTime)
+    {
+        isInputEnabled = false;
+
+        balcony.GetComponent<Balcony>().plank.GetComponent<Plank>().PlankAction();
+
+        yield return new WaitForSeconds(waitingTime);
+
+        isInputEnabled = true;
+    }
+
+    public void SafeModeActivation()
+    {
+        if (safeMode)
         {
-            toggle.interactable = true;
+            safeMode = false;
+            locomotionSystem.gameObject.SetActive(true);
+            controlPanel.SetActive(true);
+            Debug.Log("Disable safe mode");
+        }
+        else
+        {
+            safeMode = true;
+            locomotionSystem.gameObject.SetActive(false);
+            controlPanel.SetActive(false);
+            Debug.Log("Enable safe mode");
         }
     }
+
+
+    // Allow to enable/disable OnValueChange function, so we can edit toggles of control pannel without trigger the function
+    /////////////////
+
+    public void Mute(UnityEngine.Events.UnityEventBase ev)
+    {
+        int count = ev.GetPersistentEventCount();
+        for (int i = 0; i < count; i++)
+        {
+            ev.SetPersistentListenerState(i, UnityEngine.Events.UnityEventCallState.Off);
+        }
+    }
+
+    public void Unmute(UnityEngine.Events.UnityEventBase ev)
+    {
+        int count = ev.GetPersistentEventCount();
+        for (int i = 0; i < count; i++)
+        {
+            ev.SetPersistentListenerState(i, UnityEngine.Events.UnityEventCallState.RuntimeOnly);
+        }
+    }
+
+    /////////////////
 }

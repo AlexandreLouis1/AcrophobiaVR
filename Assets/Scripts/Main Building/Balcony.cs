@@ -8,6 +8,7 @@ public class Balcony : MonoBehaviour
     public GameObject anchorList;
     public GameObject fences;
     public GameObject plank;
+    public GameObject controlPanel;
 
     public int numOfFloor;
 

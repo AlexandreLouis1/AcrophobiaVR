@@ -20,7 +20,7 @@ public class Cabin : MonoBehaviour
 
     public void OpenCabin()
     {
-        doorAnim.SetBool("isOpen", false);
+        doorAnim.SetBool("isOpen", true);
 
         elevatorDoorAudio.clip = elevatorDoorClose;
         elevatorDoorAudio.Play();
@@ -28,7 +28,7 @@ public class Cabin : MonoBehaviour
 
     public void CloseCabin()
     {
-        doorAnim.SetBool("isOpen", true);
+        doorAnim.SetBool("isOpen", false);
 
         elevatorDoorAudio.clip = elevatorDoorOpen;
         elevatorDoorAudio.Play();

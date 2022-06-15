@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class Fences : MonoBehaviour
 {
-    [SerializeField] GameManager gameManager;
-
     public GameObject fenceFull;
     public GameObject fenceLight;
     public GameObject fenceRotationPoint;
+    public GameObject balcony;
 
     private Animator fenceAnim;
-
-    public bool isFenceFullShowing = true;
-    public bool isFencesOpen = false;
 
     private void Awake()
     {
@@ -22,7 +18,7 @@ public class Fences : MonoBehaviour
 
     public void ShowFenceFull()
     {
-        if (gameManager.balcony.GetComponent<Plank>().isPlankActive)
+        if (balcony.GetComponent<Balcony>().plank.GetComponent<Plank>().plankAnim.GetBool("isOpen") == true)
         {
             Debug.LogError("Ramenez d'abord la planche.");
         }
@@ -30,10 +26,6 @@ public class Fences : MonoBehaviour
         {
             fenceFull.gameObject.SetActive(true);
             fenceLight.gameObject.SetActive(false);
-
-            isFenceFullShowing = true;
-
-            gameManager.StartCoroutine("ToggleInteractionWaintingTime", 1);
         }
     }
 
@@ -41,33 +33,76 @@ public class Fences : MonoBehaviour
     {
         fenceLight.gameObject.SetActive(true);
         fenceFull.gameObject.SetActive(false);
-
-        isFenceFullShowing = false;
-
-        gameManager.StartCoroutine("ToggleInteractionWaintingTime", 1);
     }
 
     public void HideFence()
     {
         fenceLight.gameObject.SetActive(false);
         fenceFull.gameObject.SetActive(false);
-
-        isFenceFullShowing = false;
-
-        gameManager.StartCoroutine("ToggleInteractionWaintingTime", 1);
     }
 
     public void FenceAction()
     {
-        if (isFencesOpen)
+        if (fenceAnim.GetBool("isOpen") == true)
         {
             fenceAnim.SetBool("isOpen", false);
-            isFencesOpen = false;
         }
         else
         {
             fenceAnim.SetBool("isOpen", true);
-            isFencesOpen = true;
+        }
+    }
+
+    public bool CheckFenceState(int typeOfFence)
+    {
+        bool check;
+        switch (typeOfFence)
+        {
+            case 0:
+                {
+                    if (fenceFull.activeSelf)
+                    {
+                        check = false;
+                        return check;
+                    }
+                    else
+                    {
+                        check = true;
+                        return check;
+                    }
+                }
+            case 1:
+                {
+                    if (fenceLight.activeSelf)
+                    {
+                        check = false;
+                        return check;
+                    }
+                    else
+                    {
+                        check = true;
+                        return check;
+                    }
+                }
+            case 2:
+                {
+                    if (!fenceLight.activeSelf && !fenceFull.activeSelf)
+                    {
+                        check = false;
+                        return check;
+                    }
+                    else
+                    {
+                        check = true;
+                        return check;
+                    }
+                }
+            default:
+                {
+                    Debug.LogError("Check fence state fail.");
+                    check = false;
+                    return check;
+                }
         }
     }
 }
