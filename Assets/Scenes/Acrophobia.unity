@@ -7198,6 +7198,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
+  plankToggleGo: {fileID: 0}
+  emptyFenceToggleGo: {fileID: 0}
+  lightFenceToggleGo: {fileID: 0}
+  fullFenceToggleGo: {fileID: 0}
   plankToggle: {fileID: 0}
   emptyFenceToggle: {fileID: 0}
   lightFenceToggle: {fileID: 0}
@@ -69269,7 +69273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   balcony: {fileID: 7317983407576037379}
-  isPlankActive: 0
+  plankAnim: {fileID: 0}
 --- !u!95 &3567291947303558159
 Animator:
   serializedVersion: 3
@@ -69588,10 +69592,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 4309385478446805160}
-  plankToggle: {fileID: 3567291946914346824}
-  emptyFenceToggle: {fileID: 3567291946625957474}
-  lightFenceToggle: {fileID: 3567291948115633965}
-  fullFenceToggle: {fileID: 3567291946762287491}
+  plankToggleGo: {fileID: 3567291946914346824}
+  emptyFenceToggleGo: {fileID: 3567291946625957474}
+  lightFenceToggleGo: {fileID: 3567291948115633965}
+  fullFenceToggleGo: {fileID: 3567291946762287491}
+  plankToggle: {fileID: 0}
+  emptyFenceToggle: {fileID: 0}
+  lightFenceToggle: {fileID: 0}
+  fullFenceToggle: {fileID: 0}
 --- !u!4 &3567291947474485070
 Transform:
   m_ObjectHideFlags: 0
@@ -73596,7 +73604,6 @@ MonoBehaviour:
   fenceLight: {fileID: 5270533753866879241}
   fenceRotationPoint: {fileID: 7947977324667202652}
   balcony: {fileID: 7317983407576037379}
-  isFenceOpen: 0
 --- !u!4 &3567291948367172127
 Transform:
   m_ObjectHideFlags: 0

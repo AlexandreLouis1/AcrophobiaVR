@@ -7,83 +7,93 @@ public class ControlPanel : MonoBehaviour
 {
     [SerializeField] GameManager gameManager;
 
-    public GameObject plankToggle;
-    public GameObject emptyFenceToggle;
-    public GameObject lightFenceToggle;
-    public GameObject fullFenceToggle;
+    public GameObject plankToggleGo;
+    public GameObject emptyFenceToggleGo;
+    public GameObject lightFenceToggleGo;
+    public GameObject fullFenceToggleGo;
 
     private Toggle[] toggleList;
+
+    private Toggle plankToggle;
+    private Toggle emptyFenceToggle;
+    private Toggle lightFenceToggle;
+    private Toggle fullFenceToggle;
 
     void Awake()
     {
         toggleList = FindObjectsOfType<Toggle>();
+
+        plankToggle = plankToggleGo.GetComponent<Toggle>();
+        emptyFenceToggle = emptyFenceToggleGo.GetComponent<Toggle>();
+        lightFenceToggle = lightFenceToggleGo.GetComponent<Toggle>();
+        fullFenceToggle = fullFenceToggleGo.GetComponent<Toggle>();
     }
 
     private void OnEnable()
     {
-        gameManager.Mute(plankToggle.GetComponent<Toggle>().onValueChanged);
-        gameManager.Mute(emptyFenceToggle.GetComponent<Toggle>().onValueChanged);
-        gameManager.Mute(lightFenceToggle.GetComponent<Toggle>().onValueChanged);
-        gameManager.Mute(fullFenceToggle.GetComponent<Toggle>().onValueChanged);
+        gameManager.Mute(plankToggle.onValueChanged);
+        gameManager.Mute(emptyFenceToggle.onValueChanged);
+        gameManager.Mute(lightFenceToggle.onValueChanged);
+        gameManager.Mute(fullFenceToggle.onValueChanged);
 
         if (GetComponentInParent<Balcony>().plank.GetComponent<Plank>().plankAnim.GetBool("isOpen") == true)
         {
-            plankToggle.GetComponent<Toggle>().isOn = true;
+            plankToggle.isOn = true;
         }
         else
         {
-            plankToggle.GetComponent<Toggle>().isOn = false;
+            plankToggle.isOn = false;
         }
 
         if (GetComponentInParent<Balcony>().fences.GetComponent<Fences>().fenceFull.activeSelf)
         {
-            fullFenceToggle.GetComponent<Toggle>().isOn = true;
-            lightFenceToggle.GetComponent<Toggle>().isOn = false;
-            emptyFenceToggle.GetComponent<Toggle>().isOn = false;
+            fullFenceToggle.isOn = true;
+            lightFenceToggle.isOn = false;
+            emptyFenceToggle.isOn = false;
         }
 
         else if (GetComponentInParent<Balcony>().fences.GetComponent<Fences>().fenceLight.activeSelf)
         {
-            fullFenceToggle.GetComponent<Toggle>().isOn = false;
-            lightFenceToggle.GetComponent<Toggle>().isOn = true;
-            emptyFenceToggle.GetComponent<Toggle>().isOn = false;
+            fullFenceToggle.isOn = false;
+            lightFenceToggle.isOn = true;
+            emptyFenceToggle.isOn = false;
         }
 
         else
         {
-            fullFenceToggle.GetComponent<Toggle>().isOn = false;
-            lightFenceToggle.GetComponent<Toggle>().isOn = false;
-            emptyFenceToggle.GetComponent<Toggle>().isOn = true;
+            fullFenceToggle.isOn = false;
+            lightFenceToggle.isOn = false;
+            emptyFenceToggle.isOn = true;
         }
 
-        gameManager.Unmute(plankToggle.GetComponent<Toggle>().onValueChanged);
-        gameManager.Unmute(emptyFenceToggle.GetComponent<Toggle>().onValueChanged);
-        gameManager.Unmute(lightFenceToggle.GetComponent<Toggle>().onValueChanged);
-        gameManager.Unmute(fullFenceToggle.GetComponent<Toggle>().onValueChanged);
+        gameManager.Unmute(plankToggle.onValueChanged);
+        gameManager.Unmute(emptyFenceToggle.onValueChanged);
+        gameManager.Unmute(lightFenceToggle.onValueChanged);
+        gameManager.Unmute(fullFenceToggle.onValueChanged);
     }
 
     private void Update()
     {
-        if (plankToggle.GetComponent<Toggle>().isOn)
+        if (plankToggle.isOn)
         {
-            emptyFenceToggle.GetComponent<Toggle>().interactable = false;
-            lightFenceToggle.GetComponent<Toggle>().interactable = false;
-            fullFenceToggle.GetComponent<Toggle>().interactable = false;
+            emptyFenceToggle.interactable = false;
+            lightFenceToggle.interactable = false;
+            fullFenceToggle.interactable = false;
         }
         else
         {
-            emptyFenceToggle.GetComponent<Toggle>().interactable = true;
-            lightFenceToggle.GetComponent<Toggle>().interactable = true;
-            fullFenceToggle.GetComponent<Toggle>().interactable = true;
+            emptyFenceToggle.interactable = true;
+            lightFenceToggle.interactable = true;
+            fullFenceToggle.interactable = true;
         }
 
-        if (fullFenceToggle.GetComponent<Toggle>().isOn)
+        if (fullFenceToggle.isOn)
         {
-            plankToggle.GetComponent<Toggle>().interactable = false;
+            plankToggle.interactable = false;
         }
         else
         {
-            plankToggle.GetComponent<Toggle>().interactable = true;
+            plankToggle.interactable = true;
         }
     }
 
