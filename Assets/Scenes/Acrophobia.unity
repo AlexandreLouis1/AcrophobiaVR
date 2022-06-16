@@ -7202,10 +7202,6 @@ MonoBehaviour:
   emptyFenceToggleGo: {fileID: 0}
   lightFenceToggleGo: {fileID: 0}
   fullFenceToggleGo: {fileID: 0}
-  plankToggle: {fileID: 0}
-  emptyFenceToggle: {fileID: 0}
-  lightFenceToggle: {fileID: 0}
-  fullFenceToggle: {fileID: 0}
 --- !u!114 &436385658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32819,7 +32815,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6338612314378345234, guid: e9364a1f89a24314b85c1219c3d6ad2d, type: 3}
+  - {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -33003,6 +32999,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightBtn: {fileID: 8011243745003239043}
+  cabinControl: {fileID: 3567291947545742119}
+  lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
+  lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
 --- !u!65 &114616114255279769
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33011,7 +33011,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 114616114255279771}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.019999992, z: 0.0140748955}
@@ -33049,6 +33049,7 @@ GameObject:
   - component: {fileID: 114616114255279768}
   - component: {fileID: 114616114255279769}
   - component: {fileID: 114616114255279770}
+  - component: {fileID: 114616114255279772}
   m_Layer: 7
   m_Name: Button
   m_TagString: Untagged
@@ -33056,6 +33057,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!54 &114616114255279772
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114616114255279771}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!23 &167888202942434217
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -67769,6 +67786,7 @@ GameObject:
   - component: {fileID: 3567291946809142269}
   - component: {fileID: 3567291946809142270}
   - component: {fileID: 3567291946809142271}
+  - component: {fileID: 3567291946809142266}
   m_Layer: 7
   m_Name: Button
   m_TagString: Untagged
@@ -67776,6 +67794,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!54 &3567291946809142266
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291946809142265}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!23 &3567291946809142268
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -67829,6 +67863,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightBtn: {fileID: 3567291947643905700}
+  cabinControl: {fileID: 3567291947545742119}
+  lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
+  lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
 --- !u!65 &3567291946809142270
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -67837,7 +67875,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3567291946809142265}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.019999992, z: 0.0140748955}
@@ -69340,6 +69378,7 @@ GameObject:
   - component: {fileID: 3567291947312858614}
   - component: {fileID: 3567291947312858615}
   - component: {fileID: 3567291947312858608}
+  - component: {fileID: 3567291947312858611}
   m_Layer: 7
   m_Name: Button
   m_TagString: Untagged
@@ -69347,6 +69386,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!54 &3567291947312858611
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291947312858610}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!33 &3567291947312858612
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -69408,6 +69463,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightBtn: {fileID: 3567291948411114989}
+  cabinControl: {fileID: 3567291947545742119}
+  lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
+  lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
 --- !u!65 &3567291947312858615
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69416,7 +69475,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3567291947312858610}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.019999992, z: 0.0140748955}
@@ -69482,6 +69541,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightBtn: {fileID: 3567291946603125565}
+  cabinControl: {fileID: 3567291947545742119}
+  lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
+  lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
 --- !u!65 &3567291947330439843
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69490,7 +69553,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3567291947330439870}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.019999992, z: 0.0140748955}
@@ -69542,6 +69605,7 @@ GameObject:
   - component: {fileID: 3567291947330439842}
   - component: {fileID: 3567291947330439843}
   - component: {fileID: 3567291947330439868}
+  - component: {fileID: 3567291947330439871}
   m_Layer: 7
   m_Name: Button
   m_TagString: Untagged
@@ -69549,6 +69613,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!54 &3567291947330439871
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291947330439870}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &3567291947350727981
 Transform:
   m_ObjectHideFlags: 0
@@ -69596,10 +69676,6 @@ MonoBehaviour:
   emptyFenceToggleGo: {fileID: 3567291946625957474}
   lightFenceToggleGo: {fileID: 3567291948115633965}
   fullFenceToggleGo: {fileID: 3567291946762287491}
-  plankToggle: {fileID: 0}
-  emptyFenceToggle: {fileID: 0}
-  lightFenceToggle: {fileID: 0}
-  fullFenceToggle: {fileID: 0}
 --- !u!4 &3567291947474485070
 Transform:
   m_ObjectHideFlags: 0
@@ -69974,7 +70050,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3567291947557184983}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.019999992, z: 0.0140748955}
@@ -70026,6 +70102,7 @@ GameObject:
   - component: {fileID: 3567291947557184987}
   - component: {fileID: 3567291947557184980}
   - component: {fileID: 3567291947557184981}
+  - component: {fileID: 3567291947557184984}
   m_Layer: 7
   m_Name: Button
   m_TagString: Untagged
@@ -70033,6 +70110,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!54 &3567291947557184984
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291947557184983}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!33 &3567291947557184985
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -70094,6 +70187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightBtn: {fileID: 3567291947011629451}
+  cabinControl: {fileID: 3567291947545742119}
+  lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
+  lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
 --- !u!23 &3567291947587856528
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -70222,6 +70319,7 @@ GameObject:
   - component: {fileID: 3567291947612675134}
   - component: {fileID: 3567291947612675135}
   - component: {fileID: 3567291947612675128}
+  - component: {fileID: 3567291947612675131}
   m_Layer: 7
   m_Name: Button
   m_TagString: Untagged
@@ -70229,6 +70327,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!54 &3567291947612675131
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291947612675130}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!33 &3567291947612675132
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -70290,6 +70404,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightBtn: {fileID: 3567291946487281100}
+  cabinControl: {fileID: 3567291947545742119}
+  lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
+  lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
 --- !u!65 &3567291947612675135
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -70298,7 +70416,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3567291947612675130}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.019999992, z: 0.0140748955}
@@ -70715,6 +70833,7 @@ GameObject:
   - component: {fileID: 3567291947739958678}
   - component: {fileID: 3567291947739958679}
   - component: {fileID: 3567291947739958672}
+  - component: {fileID: 3567291947739958675}
   m_Layer: 7
   m_Name: Button
   m_TagString: Untagged
@@ -70722,6 +70841,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!54 &3567291947739958675
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291947739958674}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!33 &3567291947739958676
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -70783,6 +70918,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightBtn: {fileID: 3567291947276634251}
+  cabinControl: {fileID: 3567291947545742119}
+  lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
+  lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
 --- !u!65 &3567291947739958679
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -70791,7 +70930,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3567291947739958674}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.019999992, z: 0.0140748955}
@@ -71053,6 +71192,7 @@ GameObject:
   - component: {fileID: 3567291947766475669}
   - component: {fileID: 3567291947766475670}
   - component: {fileID: 3567291947766475671}
+  - component: {fileID: 3567291947766475666}
   m_Layer: 7
   m_Name: Button
   m_TagString: Untagged
@@ -71060,6 +71200,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!54 &3567291947766475666
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291947766475665}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!23 &3567291947766475668
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -71113,6 +71269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightBtn: {fileID: 3567291948088596989}
+  cabinControl: {fileID: 3567291947545742119}
+  lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
+  lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
 --- !u!65 &3567291947766475670
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -71121,7 +71281,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3567291947766475665}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.019999992, z: 0.0140748955}
@@ -71756,6 +71916,7 @@ GameObject:
   - component: {fileID: 3567291947976891732}
   - component: {fileID: 3567291947976891733}
   - component: {fileID: 1774745723}
+  - component: {fileID: 3567291947976891736}
   m_Layer: 0
   m_Name: LeftHand Controller
   m_TagString: Untagged
@@ -71763,6 +71924,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!135 &3567291947976891736
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291947976891735}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3567291947976891738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72215,6 +72389,7 @@ GameObject:
   - component: {fileID: 3567291948025663690}
   - component: {fileID: 3567291948025663691}
   - component: {fileID: 3567291948025663684}
+  - component: {fileID: 3567291948025663687}
   m_Layer: 7
   m_Name: Button
   m_TagString: Untagged
@@ -72222,6 +72397,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!54 &3567291948025663687
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291948025663686}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!33 &3567291948025663688
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -72283,6 +72474,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightBtn: {fileID: 3567291947543420207}
+  cabinControl: {fileID: 3567291947545742119}
+  lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
+  lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
 --- !u!65 &3567291948025663691
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72291,7 +72486,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3567291948025663686}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.019999992, z: 0.0140748955}
@@ -72664,6 +72859,7 @@ GameObject:
   - component: {fileID: 3567291948104612292}
   - component: {fileID: 3567291948104612293}
   - component: {fileID: 3567291948104612294}
+  - component: {fileID: 3567291948104612289}
   m_Layer: 7
   m_Name: Button
   m_TagString: Untagged
@@ -72671,6 +72867,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!54 &3567291948104612289
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291948104612288}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &3567291948104612292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72683,6 +72895,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightBtn: {fileID: 3567291947266127022}
+  cabinControl: {fileID: 3567291947545742119}
+  lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
+  lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
 --- !u!65 &3567291948104612293
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72691,7 +72907,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3567291948104612288}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.019999992, z: 0.0140748955}
@@ -72905,6 +73121,7 @@ GameObject:
   - component: {fileID: 3567291948255060339}
   - component: {fileID: 3567291948255060343}
   - component: {fileID: 717113093}
+  - component: {fileID: 3567291948255060302}
   m_Layer: 0
   m_Name: RightHand Controller
   m_TagString: Untagged
@@ -72912,6 +73129,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
   m_IsActive: 1
+--- !u!135 &3567291948255060302
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291948255060301}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3567291948255060336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76604,7 +76834,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 1
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8199263204636219329
 Transform:
