@@ -2818,7 +2818,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a2f6c36e4bc784f9bd74846b54b15f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlPanel: {fileID: 1154102645087680806}
+  gameManager: {fileID: 0}
+  plankToggleGo: {fileID: 0}
+  emptyFenceToggleGo: {fileID: 0}
+  lightFenceToggleGo: {fileID: 0}
+  fullFenceToggleGo: {fileID: 0}
 --- !u!1 &1154102645111312957
 GameObject:
   m_ObjectHideFlags: 0
@@ -2994,8 +2998,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3887b147dc82ae40babcce9abbdd439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cabinControlPanel: {fileID: 1154102645142228302}
-  gameManager: {fileID: 0}
 --- !u!1 &1154102645157665606
 GameObject:
   m_ObjectHideFlags: 0
@@ -3408,9 +3410,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2c14222c6c5e044ac6c2b0197dffaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plank: {fileID: 1154102645187287661}
-  fences: {fileID: 1154102646266696817}
-  gameManager: {fileID: 0}
+  balcony: {fileID: 0}
+  plankAnim: {fileID: 0}
 --- !u!1 &1154102645215615815
 GameObject:
   m_ObjectHideFlags: 0
@@ -6016,10 +6017,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2df5ba959a811b14bbcc3cc0d8376498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
   fenceFull: {fileID: 3266738678933581852}
   fenceLight: {fileID: 1154102644967962707}
   fenceRotationPoint: {fileID: 1154102644902753038}
+  balcony: {fileID: 0}
 --- !u!1 &1154102646276892509
 GameObject:
   m_ObjectHideFlags: 0
@@ -7297,9 +7298,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca11c4594e786f42867437e34cb4eae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balcony: {fileID: 4903030479967256170}
   cabin: {fileID: 8797129281225007527}
   anchorList: {fileID: 1154102645111312957}
+  fences: {fileID: 0}
+  plank: {fileID: 0}
+  controlPanel: {fileID: 0}
+  numOfFloor: 0
 --- !u!65 &4903030479967256168
 BoxCollider:
   m_ObjectHideFlags: 0
