@@ -6,12 +6,17 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Interaction : MonoBehaviour
 {
+    public GameObject handRight;
+    public GameObject handLeft;
+    float animPosition = 0;
     private float waitingTime = 2f;
     private int fenceType;
 
     [SerializeField] InputActionReference activate;
     [SerializeField] InputActionReference select;
     [SerializeField] InputActionReference handGrip;
+    [SerializeField] InputActionReference triggerRightPressed;
+    [SerializeField] InputActionReference triggerLeftPressed;
 
     [SerializeField] XRRayInteractor _RayInteractor;
     [SerializeField] Canvas menu;
@@ -24,7 +29,10 @@ public class Interaction : MonoBehaviour
         activate.action.performed += ButtonAction;
         select.action.performed += ButtonMenu;
         handGrip.action.performed += SafeZoneActivation;
-
+        triggerRightPressed.action.started += pointingActivation;
+        triggerRightPressed.action.canceled += pointingDesactivation;
+        triggerLeftPressed.action.started += pointingActivation;
+        triggerLeftPressed.action.canceled += pointingDesactivation;
         gameManager = gameManager.GetComponent<GameManager>();
     }
 
@@ -40,6 +48,66 @@ public class Interaction : MonoBehaviour
         {
             gameManager.fader.GetComponent<Fader>().FadeIn();
         }
+    }
+
+    private void pointingActivation(InputAction.CallbackContext obj)
+    {
+        Debug.Log("trigger ON -- start anim");
+        if(obj.action.name == "PointingRight")
+        {
+            handRight.GetComponent<Animator>().SetBool("isPointing", true);
+        }
+        else if(obj.action.name == "PointingLeft")
+        {
+            handLeft.GetComponent<Animator>().SetBool("isPointing", true);
+        }
+
+        /*AnimatorStateInfo animationState = hand.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+
+
+        Debug.Log(animationState);
+        Debug.Log(animationState.ToString());
+
+        animPosition = 0;
+        if (animationState.IsName("Hand_Default"))
+        {
+            animPosition = 1 - animationState.normalizedTime;
+            /*if (animPosition < 0)
+                animPosition = 0;
+            else
+                animPosition = 0;
+            
+        }*/
+        //hand.GetComponent<Animator>().Play("Hand_Pointing", 0, animPosition);
+        
+    }
+    private void pointingDesactivation(InputAction.CallbackContext obj)
+    {
+        Debug.Log("trigger OFF -- cancel anim");
+        Debug.Log(obj.action.name);
+
+        /*AnimatorStateInfo animationState = hand.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+        Debug.Log(animationState);
+        Debug.Log(animationState.ToString());
+        if (animationState.IsName("Hand_Pointing"))
+        {
+            animPosition = 1 - animationState.normalizedTime;
+            /*if (animPosition < 0)
+                animPosition = 0;
+            else
+                animPosition = 0;
+            //hand.GetComponent<Animator>().Play("Hand_Default", 0, animPosition);
+            
+        }*/
+        if (obj.action.name == "PointingRight")
+        {
+            handRight.GetComponent<Animator>().SetBool("isPointing", false);
+        }
+        else if (obj.action.name == "PointingLeft")
+        {
+            handLeft.GetComponent<Animator>().SetBool("isPointing", false);
+        }
+        
     }
 
     private void ButtonAction(InputAction.CallbackContext obj)
@@ -182,4 +250,13 @@ public class Interaction : MonoBehaviour
         } 
     }
 }
-    
+
+
+
+
+
+
+
+
+
+

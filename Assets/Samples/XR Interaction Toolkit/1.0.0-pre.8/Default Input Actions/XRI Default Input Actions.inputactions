@@ -154,6 +154,14 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "PointingLeft",
+                    "type": "Button",
+                    "id": "88669e2b-4aa6-407a-b946-7e10e22c08de",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -475,6 +483,17 @@
                     "action": "Translate Anchor",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "8a128ee7-5956-4f5c-90f4-d4f70e5c3f15",
+                    "path": "<OculusTouchController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointingLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -590,6 +609,14 @@
                     "name": "SafeZoneHold",
                     "type": "Button",
                     "id": "a1364a6e-8c2c-4fe5-a6ff-9574fcf0a287",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PointingRight",
+                    "type": "Button",
+                    "id": "e0831e4a-9dbf-44e1-83d0-d5e35c59027f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -912,6 +939,17 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "SafeZoneHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b3f3f69-932d-44c7-a49d-3021c458f129",
+                    "path": "<OculusTouchController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointingRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
