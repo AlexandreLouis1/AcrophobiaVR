@@ -1,29 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject balcony;
-    public GameObject fader;
+    public GameObject g_fader;
     public GameObject controlPanel;
     public GameObject locomotionSystem;
+    public GameObject XRRig;
+
+    private Fader fader;
 
     public bool waiting = false;
     public bool safeMode = true;
     public bool isInputEnabled = true;
 
+    public bool isReady = true;
+    public float timeToWait;
+
+    private float time = 0;
+
+
+    private void Awake()
+    {
+        fader = g_fader.GetComponent<Fader>();
+    }
     public IEnumerator ChangeFloorFromKeyboard(float waitingTime, int floorNumber)
     {
         isInputEnabled = false;
 
-        fader.GetComponent<Fader>().FadeIn();
+        fader.FadeIn();
         yield return new WaitForSeconds(waitingTime);
 
         balcony.GetComponent<Balcony>().SelectFloor(floorNumber);
 
-        fader.GetComponent<Fader>().FadeOut();
+        fader.FadeOut();
         yield return new WaitForSeconds(waitingTime + waitingTime / 2);
 
         isInputEnabled = true;
@@ -33,7 +45,7 @@ public class GameManager : MonoBehaviour
     {
         isInputEnabled = false;
 
-        fader.GetComponent<Fader>().FadeIn();
+        fader.FadeIn();
         yield return new WaitForSeconds(waitingTime);
 
         switch (fenceType)
@@ -59,7 +71,7 @@ public class GameManager : MonoBehaviour
                 }
         }
 
-        fader.GetComponent<Fader>().FadeOut();
+        fader.FadeOut();
         yield return new WaitForSeconds(waitingTime + waitingTime / 2);
 
         isInputEnabled = true;
@@ -94,6 +106,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SafeZoneActivation()
+    {
+        isReady = false;
+        time = 0;
+        timeToWait = 3;
+
+        if (fader.newColor2.a == 1)
+        {
+            fader.FadeOut();
+        }
+        if (fader.newColor2.a == 0)
+        {
+            fader.FadeIn();
+        }
+    }
+
+    public IEnumerator TeleportPlayerOnAnchor(PlayerAnchor playerAnchor, float waitingTime)
+    {
+        isInputEnabled = false;
+
+        fader.FadeIn();
+        yield return new WaitForSeconds(waitingTime);
+        XRRig.transform.position = playerAnchor.transform.position;
+        fader.FadeOut();
+        isInputEnabled = true;
+    }
 
     // Allow to enable/disable OnValueChange function, so we can edit toggles of control pannel without trigger the function
     /////////////////
@@ -117,4 +155,17 @@ public class GameManager : MonoBehaviour
     }
 
     /////////////////
+    ///
+    private void Update()
+    {
+        if (!isReady)
+        {
+            time += Time.deltaTime;
+            Debug.Log(time);
+            if(time > 3)
+            {
+                isReady = true;
+            }
+        }
+    }
 }

@@ -154,6 +154,14 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "SafeZoneHold",
+                    "type": "Button",
+                    "id": "26b6682f-9941-4efe-b4fc-e75853a8aa6a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -475,6 +483,28 @@
                     "action": "Translate Anchor",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "4e51c8de-09dd-45c6-81e7-bc9185b91fa6",
+                    "path": "<OculusTouchController>{LeftHand}/gripPressed",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SafeZoneHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "02a069a7-7e16-4f1b-ae75-0ce334dad3d7",
+                    "path": "<Keyboard>/#(J)",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SafeZoneHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -908,9 +938,20 @@
                     "name": "",
                     "id": "58d1ba98-2901-4cf1-8523-0a7b54a7156e",
                     "path": "<OculusTouchController>{RightHand}/gripPressed",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SafeZoneHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fdef9dd6-a8b1-4eab-a557-70923930c057",
+                    "path": "<Keyboard>/k",
                     "interactions": "Hold",
                     "processors": "",
-                    "groups": "Generic XR Controller",
+                    "groups": "",
                     "action": "SafeZoneHold",
                     "isComposite": false,
                     "isPartOfComposite": false

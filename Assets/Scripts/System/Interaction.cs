@@ -9,9 +9,13 @@ public class Interaction : MonoBehaviour
     private float waitingTime = 2f;
     private int fenceType;
 
+    [SerializeField] private bool rightGripIsActive = false;
+    [SerializeField] private bool leftGripIsActive = false;
+
     [SerializeField] InputActionReference activate;
     [SerializeField] InputActionReference select;
-    [SerializeField] InputActionReference handGrip;
+    [SerializeField] InputActionReference rightHandGrip;
+    [SerializeField] InputActionReference leftHandGrip;
 
     [SerializeField] XRRayInteractor _RayInteractor;
     [SerializeField] Canvas menu;
@@ -23,24 +27,37 @@ public class Interaction : MonoBehaviour
     {
         activate.action.performed += ButtonAction;
         select.action.performed += ButtonMenu;
-        handGrip.action.performed += SafeZoneActivation;
+        rightHandGrip.action.canceled += rightSafeZoneActivationCancel;
+        leftHandGrip.action.canceled += leftSafeZoneActivationCancel;
+        rightHandGrip.action.performed += rightSafeZoneActivationPerformed;
+        leftHandGrip.action.performed += leftSafeZoneActivationPerformed;
 
         gameManager = gameManager.GetComponent<GameManager>();
     }
 
          ////////////////////// CONTROLLER INPUTS //////////////////////////
-
-    private void SafeZoneActivation(InputAction.CallbackContext obj)
+         ///
+    private void rightSafeZoneActivationCancel(InputAction.CallbackContext obj)
     {
-        if (gameManager.fader.GetComponent<Fader>().newColor2.a == 1)
-        {
-            gameManager.fader.GetComponent<Fader>().FadeOut();
-        }
-        if (gameManager.fader.GetComponent<Fader>().newColor2.a == 0)
-        {
-            gameManager.fader.GetComponent<Fader>().FadeIn();
-        }
+        rightGripIsActive = false;
+        Debug.Log("rightGripIsCancel");
     }
+    private void leftSafeZoneActivationCancel(InputAction.CallbackContext obj)
+    {
+        leftGripIsActive = false;
+        Debug.Log("leftGripIsCancel");
+    }
+    private void rightSafeZoneActivationPerformed(InputAction.CallbackContext obj)
+    {
+        rightGripIsActive = true;
+        Debug.Log("leftGrip Active");
+    }
+    private void leftSafeZoneActivationPerformed(InputAction.CallbackContext obj)
+    {
+        leftGripIsActive = true;
+        Debug.Log("leftGrip Active");
+    }
+
 
     private void ButtonAction(InputAction.CallbackContext obj)
     {
@@ -73,6 +90,10 @@ public class Interaction : MonoBehaviour
 
     private void Update()
     {
+        if(leftGripIsActive && rightGripIsActive && gameManager.isReady)
+        {
+            gameManager.SafeZoneActivation();
+        }
             ////////////////////// KEYBOARD INPUTS //////////////////////////
             ///
 
@@ -176,6 +197,24 @@ public class Interaction : MonoBehaviour
                 if (Input.GetKeyDown("p"))
                 {
                     StartCoroutine(gameManager.ActivePlankFromKeyboard(waitingTime));
+                }
+
+                // PLAYER POSITION
+                if (Input.GetKeyDown("w") && gameManager.isReady)
+                {
+                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[0], waitingTime));
+                }
+                if (Input.GetKeyDown("x") && gameManager.isReady)
+                {
+                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[1], waitingTime));
+                }
+                if (Input.GetKeyDown("c") && gameManager.isReady)
+                {
+                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[2], waitingTime));
+                }
+                if (Input.GetKeyDown("v") && gameManager.isReady)
+                {
+                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[3], waitingTime));
                 }
             }
         } 
