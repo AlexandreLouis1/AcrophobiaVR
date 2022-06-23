@@ -9,11 +9,11 @@ public class Balcony : MonoBehaviour
     public GameObject plank;
     public GameObject controlPanel;
 
+
     public int numOfFloor;
 
     public void SelectFloor(int numOfFloor)
     {
-        Debug.Log(Anchor.anchorList.Count);
         foreach (Anchor anchor in Anchor.anchorList)
         {
             if(anchor.floorNumber == numOfFloor)

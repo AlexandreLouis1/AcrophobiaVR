@@ -46,12 +46,13 @@ public class Interaction : MonoBehaviour
     {
         if (_RayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit ray))
         {
-            if (ray.transform.name == "Button")
+            if (ray.transform.tag == "Button")
             {
-                if (ray.transform.GetComponent<Animator>().GetBool("isOn") == false)
+                ray.transform.GetComponent<Button>().isOn();
+                /*if (ray.transform.GetComponent<Animator>().GetBool("isOn") == false)
                 {
                     ray.transform.GetComponentInParent<CabinControlPanel>().ButtonActivation(ray.transform);
-                }
+                }*/
             }
         }
     }

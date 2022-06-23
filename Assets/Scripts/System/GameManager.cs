@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public GameObject balcony;
     public GameObject fader;
     public GameObject controlPanel;
+    public Button activCabinButtons;
     public GameObject locomotionSystem;
 
     public bool waiting = false;
