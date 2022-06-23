@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class CabinControlPanel : MonoBehaviour
 {
-    Transform lastButtonActivated;
+    //Transform lastButtonActivated;
 
-    private void Awake()
+    
+    
+
+
+
+    /*private void Awake()
     {
         lastButtonActivated = transform.GetChild(0);
         lastButtonActivated.GetComponentInChildren<Animator>().SetBool("isOn", true);
-    }
+    }*/
 
+    /**
     public void ButtonActivation(Transform button)
     {
         lastButtonActivated.GetComponentInChildren<Animator>().SetBool("isOn", false);
@@ -21,4 +27,5 @@ public class CabinControlPanel : MonoBehaviour
 
         gameObject.GetComponentInParent<Balcony>().ChangeFloor(button.parent.GetSiblingIndex());
     }
+    **/
 }

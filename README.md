@@ -1,17 +1,18 @@
 # AcrophobiaVR
 Made with Unity3D ver. 2020.3.16f1
+by
+Alexandre Louis
+Paul Crepin
 
 # Introduction
 
 A prototype of VR environment to the use of clinical psychologists to assist patients with acrophobia.
-This environment is a training for my skills in development and virtual environment creation with Unity3D, therefore
-some elements in this prototype are not design for healthcare, but for exercise instead.
 
-Exclusively compatible with Oculus Quest 2.
+Compatible with Oculus Quest 2.
 
 # How to use it
 
-In the environment, use the elevator to choose a height to reach.
+In the environment, use the elevator to choose a height to reach by pressing controller trigger and touched elevator's buttons.
 
 At the balcony, choose the fence type you want, you can also deploy a plank to overlook the city.
 

@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public GameObject balcony;
     public GameObject g_fader;
     public GameObject controlPanel;
+    public Button activCabinButtons;
     public GameObject locomotionSystem;
     public GameObject XRRig;
 

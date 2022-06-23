@@ -156,9 +156,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "SafeZoneHold",
+                    "name": "PointingLeft",
                     "type": "Button",
-                    "id": "26b6682f-9941-4efe-b4fc-e75853a8aa6a",
+                    "id": "88669e2b-4aa6-407a-b946-7e10e22c08de",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -486,23 +486,12 @@
                 },
                 {
                     "name": "",
-                    "id": "4e51c8de-09dd-45c6-81e7-bc9185b91fa6",
-                    "path": "<OculusTouchController>{LeftHand}/gripPressed",
-                    "interactions": "Press",
+                    "id": "8a128ee7-5956-4f5c-90f4-d4f70e5c3f15",
+                    "path": "<OculusTouchController>{LeftHand}/triggerPressed",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SafeZoneHold",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "02a069a7-7e16-4f1b-ae75-0ce334dad3d7",
-                    "path": "<Keyboard>/#(J)",
-                    "interactions": "Hold",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SafeZoneHold",
+                    "action": "PointingLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -620,6 +609,14 @@
                     "name": "SafeZoneHold",
                     "type": "Button",
                     "id": "a1364a6e-8c2c-4fe5-a6ff-9574fcf0a287",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PointingRight",
+                    "type": "Button",
+                    "id": "e0831e4a-9dbf-44e1-83d0-d5e35c59027f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -938,21 +935,21 @@
                     "name": "",
                     "id": "58d1ba98-2901-4cf1-8523-0a7b54a7156e",
                     "path": "<OculusTouchController>{RightHand}/gripPressed",
-                    "interactions": "Press",
+                    "interactions": "Hold",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Generic XR Controller",
                     "action": "SafeZoneHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "fdef9dd6-a8b1-4eab-a557-70923930c057",
-                    "path": "<Keyboard>/k",
-                    "interactions": "Hold",
+                    "id": "7b3f3f69-932d-44c7-a49d-3021c458f129",
+                    "path": "<OculusTouchController>{RightHand}/triggerPressed",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SafeZoneHold",
+                    "action": "PointingRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
