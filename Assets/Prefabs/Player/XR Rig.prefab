@@ -475,9 +475,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f76bed7fc6d56e408fdd520321263c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  handRight: {fileID: 0}
+  handLeft: {fileID: 0}
+  rightGripIsActive: 0
+  leftGripIsActive: 0
   activate: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   select: {fileID: 0}
-  handGrip: {fileID: 0}
+  triggerRightPressed: {fileID: 0}
+  triggerLeftPressed: {fileID: 0}
+  rightHandGrip: {fileID: 0}
+  leftHandGrip: {fileID: 0}
   _RayInteractor: {fileID: 4996192478242998274}
   menu: {fileID: 0}
   balcony: {fileID: 0}

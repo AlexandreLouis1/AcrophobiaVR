@@ -8,15 +8,19 @@ public class Interaction : MonoBehaviour
 {
     public GameObject handRight;
     public GameObject handLeft;
-    float animPosition = 0;
+
+    [SerializeField] private bool rightGripIsActive = false;
+    [SerializeField] private bool leftGripIsActive = false;
+
     private float waitingTime = 2f;
     private int fenceType;
 
     [SerializeField] InputActionReference activate;
     [SerializeField] InputActionReference select;
-    [SerializeField] InputActionReference handGrip;
     [SerializeField] InputActionReference triggerRightPressed;
     [SerializeField] InputActionReference triggerLeftPressed;
+    [SerializeField] InputActionReference rightHandGrip;
+    [SerializeField] InputActionReference leftHandGrip;
 
     [SerializeField] XRRayInteractor _RayInteractor;
     [SerializeField] Canvas menu;
@@ -28,31 +32,40 @@ public class Interaction : MonoBehaviour
     {
         activate.action.performed += ButtonAction;
         select.action.performed += ButtonMenu;
-        handGrip.action.performed += SafeZoneActivation;
         triggerRightPressed.action.started += pointingActivation;
         triggerRightPressed.action.canceled += pointingDesactivation;
         triggerLeftPressed.action.started += pointingActivation;
         triggerLeftPressed.action.canceled += pointingDesactivation;
+
+        rightHandGrip.action.canceled += rightSafeZoneActivationCancel;
+        leftHandGrip.action.canceled += leftSafeZoneActivationCancel;
+        rightHandGrip.action.performed += rightSafeZoneActivationPerformed;
+        leftHandGrip.action.performed += leftSafeZoneActivationPerformed;
+
         gameManager = gameManager.GetComponent<GameManager>();
     }
 
-         ////////////////////// CONTROLLER INPUTS //////////////////////////
+    ////////////////////// CONTROLLER INPUTS //////////////////////////
 
-    private void SafeZoneActivation(InputAction.CallbackContext obj)
+    private void rightSafeZoneActivationCancel(InputAction.CallbackContext obj)
     {
-        if (gameManager.fader.GetComponent<Fader>().newColor2.a == 1)
-        {
-            gameManager.fader.GetComponent<Fader>().FadeOut();
-        }
-        if (gameManager.fader.GetComponent<Fader>().newColor2.a == 0)
-        {
-            gameManager.fader.GetComponent<Fader>().FadeIn();
-        }
+        rightGripIsActive = false;
+    }
+    private void leftSafeZoneActivationCancel(InputAction.CallbackContext obj)
+    {
+        leftGripIsActive = false;
+    }
+    private void rightSafeZoneActivationPerformed(InputAction.CallbackContext obj)
+    {
+        rightGripIsActive = true;
+    }
+    private void leftSafeZoneActivationPerformed(InputAction.CallbackContext obj)
+    {
+        leftGripIsActive = true;
     }
 
     private void pointingActivation(InputAction.CallbackContext obj)
     {
-        Debug.Log("trigger ON -- start anim");
         if(obj.action.name == "PointingRight")
         {
             handRight.GetComponent<Animator>().SetBool("isPointing", true);
@@ -60,45 +73,10 @@ public class Interaction : MonoBehaviour
         else if(obj.action.name == "PointingLeft")
         {
             handLeft.GetComponent<Animator>().SetBool("isPointing", true);
-        }
-
-        /*AnimatorStateInfo animationState = hand.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
-
-
-        Debug.Log(animationState);
-        Debug.Log(animationState.ToString());
-
-        animPosition = 0;
-        if (animationState.IsName("Hand_Default"))
-        {
-            animPosition = 1 - animationState.normalizedTime;
-            /*if (animPosition < 0)
-                animPosition = 0;
-            else
-                animPosition = 0;
-            
-        }*/
-        //hand.GetComponent<Animator>().Play("Hand_Pointing", 0, animPosition);
-        
+        }        
     }
     private void pointingDesactivation(InputAction.CallbackContext obj)
     {
-        Debug.Log("trigger OFF -- cancel anim");
-        Debug.Log(obj.action.name);
-
-        /*AnimatorStateInfo animationState = hand.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
-        Debug.Log(animationState);
-        Debug.Log(animationState.ToString());
-        if (animationState.IsName("Hand_Pointing"))
-        {
-            animPosition = 1 - animationState.normalizedTime;
-            /*if (animPosition < 0)
-                animPosition = 0;
-            else
-                animPosition = 0;
-            //hand.GetComponent<Animator>().Play("Hand_Default", 0, animPosition);
-            
-        }*/
         if (obj.action.name == "PointingRight")
         {
             handRight.GetComponent<Animator>().SetBool("isPointing", false);
@@ -106,8 +84,7 @@ public class Interaction : MonoBehaviour
         else if (obj.action.name == "PointingLeft")
         {
             handLeft.GetComponent<Animator>().SetBool("isPointing", false);
-        }
-        
+        }      
     }
 
     private void ButtonAction(InputAction.CallbackContext obj)
@@ -142,8 +119,13 @@ public class Interaction : MonoBehaviour
 
     private void Update()
     {
-            ////////////////////// KEYBOARD INPUTS //////////////////////////
-            ///
+        if (leftGripIsActive && rightGripIsActive && gameManager.isReady)
+        {
+            gameManager.SafeZoneActivation();
+        }
+
+        ////////////////////// KEYBOARD INPUTS //////////////////////////
+        ///
 
         if (gameManager.isInputEnabled)
         {
@@ -245,6 +227,30 @@ public class Interaction : MonoBehaviour
                 if (Input.GetKeyDown("p"))
                 {
                     StartCoroutine(gameManager.ActivePlankFromKeyboard(waitingTime));
+                }
+
+                // PLAYER POSITION
+                if (Input.GetKeyDown("w") && gameManager.isReady)
+                {
+                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[0], waitingTime));
+                }
+                if (Input.GetKeyDown("x") && gameManager.isReady)
+                {
+                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[1], waitingTime));
+                }
+                if (Input.GetKeyDown("c") && gameManager.isReady)
+                {
+                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[2], waitingTime));
+                }
+                if (Input.GetKeyDown("v") && gameManager.isReady)
+                {
+                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[3], waitingTime));
+                }
+
+                // QUIT APPLICATION
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    Application.Quit();
                 }
             }
         } 

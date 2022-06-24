@@ -7,30 +7,52 @@ public class Cabin : MonoBehaviour
     [SerializeField] private AudioClip elevatorDoorOpen;
     [SerializeField] private AudioClip elevatorDoorClose;
     private AudioSource elevatorDoorAudio;
-    private Animator doorAnim;
+    public Animator doorAnim;
 
+    public bool isOpen;
     private void Awake()
     {
         elevatorDoorAudio = GetComponentInChildren<AudioSource>();
         doorAnim = GetComponentInChildren<Animator>();
+    }
 
+    public void DesactivateAnimator()
+    {
+        doorAnim.enabled = false;
+    }
+    public void ActivateAnimator()
+    {
+        doorAnim.enabled = true;
+    }
+
+    public void PlayDoorOpenSound()
+    {
         elevatorDoorAudio.clip = elevatorDoorOpen;
+        elevatorDoorAudio.Play();
+    }
+    
+    public void PlayDoorCloseSound()
+    {
+        elevatorDoorAudio.clip = elevatorDoorClose;
         elevatorDoorAudio.Play();
     }
 
     public void OpenCabin()
     {
         doorAnim.SetBool("isOpen", true);
-
-        elevatorDoorAudio.clip = elevatorDoorClose;
-        elevatorDoorAudio.Play();
     }
 
     public void CloseCabin()
     {
         doorAnim.SetBool("isOpen", false);
+    }
 
-        elevatorDoorAudio.clip = elevatorDoorOpen;
-        elevatorDoorAudio.Play();
+    private void SetOpen()
+    {
+        isOpen = true;
+    }
+    private void SetClose()
+    {
+        isOpen = false;
     }
 }

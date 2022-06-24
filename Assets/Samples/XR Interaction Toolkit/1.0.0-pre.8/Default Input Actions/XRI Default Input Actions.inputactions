@@ -162,6 +162,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "SafeZoneActivation",
+                    "type": "Button",
+                    "id": "261a4156-5185-464a-b05e-cb30a76d363d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -494,6 +502,17 @@
                     "action": "PointingLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d89ad3f-4b18-4636-9683-3f0d6ea9d0e5",
+                    "path": "<OculusTouchController>{LeftHand}/gripPressed",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "SafeZoneActivation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -606,17 +625,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "SafeZoneHold",
+                    "name": "PointingRight",
                     "type": "Button",
-                    "id": "a1364a6e-8c2c-4fe5-a6ff-9574fcf0a287",
+                    "id": "e0831e4a-9dbf-44e1-83d0-d5e35c59027f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "PointingRight",
+                    "name": "SafeZoneActivation",
                     "type": "Button",
-                    "id": "e0831e4a-9dbf-44e1-83d0-d5e35c59027f",
+                    "id": "a1364a6e-8c2c-4fe5-a6ff-9574fcf0a287",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -933,23 +952,23 @@
                 },
                 {
                     "name": "",
-                    "id": "58d1ba98-2901-4cf1-8523-0a7b54a7156e",
-                    "path": "<OculusTouchController>{RightHand}/gripPressed",
-                    "interactions": "Hold",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "SafeZoneHold",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "7b3f3f69-932d-44c7-a49d-3021c458f129",
                     "path": "<OculusTouchController>{RightHand}/triggerPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "PointingRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "58d1ba98-2901-4cf1-8523-0a7b54a7156e",
+                    "path": "<OculusTouchController>{RightHand}/gripPressed",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "SafeZoneActivation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

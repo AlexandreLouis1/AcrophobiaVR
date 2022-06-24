@@ -1,17 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject balcony;
+    public GameObject g_balcony;
     public GameObject g_fader;
     public GameObject controlPanel;
-    public Button activCabinButtons;
     public GameObject locomotionSystem;
     public GameObject XRRig;
+    public GameObject rightHandController;
+    public GameObject leftHandController;
 
-    private Fader fader;
+    private XRRayInteractor rightHandXRRayInteractor;
+    private XRRayInteractor leftHandXRRayInteractor;
+
+    public Fader fader;
+    public Balcony balcony;
+
+    public Button activCabinButtons;
 
     public bool waiting = false;
     public bool safeMode = true;
@@ -26,7 +35,13 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         fader = g_fader.GetComponent<Fader>();
+        balcony = g_balcony.GetComponent<Balcony>();
+        rightHandXRRayInteractor = rightHandController.GetComponent<XRRayInteractor>();
+        leftHandXRRayInteractor = leftHandController.GetComponent<XRRayInteractor>();
+
+        StartCoroutine(DelayCabinAnimation());
     }
+
     public IEnumerator ChangeFloorFromKeyboard(float waitingTime, int floorNumber)
     {
         isInputEnabled = false;
@@ -96,6 +111,8 @@ public class GameManager : MonoBehaviour
             safeMode = false;
             locomotionSystem.gameObject.SetActive(true);
             controlPanel.SetActive(true);
+            rightHandXRRayInteractor.enabled = true;
+            leftHandXRRayInteractor.enabled = true;
             Debug.Log("Disable safe mode");
         }
         else
@@ -103,6 +120,8 @@ public class GameManager : MonoBehaviour
             safeMode = true;
             locomotionSystem.gameObject.SetActive(false);
             controlPanel.SetActive(false);
+            rightHandXRRayInteractor.enabled = false;
+            leftHandXRRayInteractor.enabled = false;
             Debug.Log("Enable safe mode");
         }
     }
@@ -134,6 +153,12 @@ public class GameManager : MonoBehaviour
         isInputEnabled = true;
     }
 
+    private IEnumerator DelayCabinAnimation()
+    {
+        yield return new WaitForSeconds(1);
+        balcony.cabin.ActivateAnimator();
+    }
+
     // Allow to enable/disable OnValueChange function, so we can edit toggles of control pannel without trigger the function
     /////////////////
 
@@ -156,13 +181,13 @@ public class GameManager : MonoBehaviour
     }
 
     /////////////////
-    ///
+
+
     private void Update()
     {
         if (!isReady)
         {
             time += Time.deltaTime;
-            Debug.Log(time);
             if(time > 3)
             {
                 isReady = true;
