@@ -7978,7 +7978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a2f6c36e4bc784f9bd74846b54b15f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
   plankToggleGo: {fileID: 0}
   emptyFenceToggleGo: {fileID: 0}
   lightFenceToggleGo: {fileID: 0}
@@ -9204,7 +9203,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496434223}
   m_LocalRotation: {x: 0.00000006657903, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 115.8, y: 0.0000025431316, z: -53.939995}
+  m_LocalPosition: {x: 174, y: 0.0000025431316, z: -53.939995}
   m_LocalScale: {x: 0.46285525, y: 0.46285525, z: 0.46285525}
   m_Children: []
   m_Father: {fileID: 7333582640570166233}
@@ -16051,7 +16050,7 @@ Transform:
   m_GameObject: {fileID: 890705241}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 74.4, y: -25.553, z: -288.6}
-  m_LocalScale: {x: 22.462696, y: 22.4627, z: 17.620329}
+  m_LocalScale: {x: 32.62931, y: 32.62932, z: 25.59529}
   m_Children: []
   m_Father: {fileID: 7333582640570166233}
   m_RootOrder: 473
@@ -21965,7 +21964,7 @@ Transform:
   m_GameObject: {fileID: 1329177761}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 91, y: -25.553, z: -217.1}
-  m_LocalScale: {x: 22.462696, y: 22.4627, z: 17.620329}
+  m_LocalScale: {x: 32.62931, y: 32.62932, z: 25.59529}
   m_Children: []
   m_Father: {fileID: 7333582640570166233}
   m_RootOrder: 432
@@ -36180,7 +36179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g_gameManager: {fileID: 4309385478446805163}
   lightBtn: {fileID: 8011243745003239043}
   lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
   lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
@@ -41210,7 +41208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3294859362197745390}
   m_LocalRotation: {x: 0.00000006657903, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 84.23, y: 0, z: -63.15}
+  m_LocalPosition: {x: 147.7, y: 0, z: -63.15}
   m_LocalScale: {x: 1.630471, y: 1.630471, z: 1.630471}
   m_Children: []
   m_Father: {fileID: 7333582640570166233}
@@ -42886,8 +42884,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3294859362323075024}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 104.76, y: 0, z: 40.31}
-  m_LocalScale: {x: 2.151325, y: 2.151325, z: 2.151325}
+  m_LocalPosition: {x: 124.6, y: 0, z: 51.4}
+  m_LocalScale: {x: 4.978596, y: 4.978596, z: 4.978596}
   m_Children: []
   m_Father: {fileID: 7333582640570166233}
   m_RootOrder: 124
@@ -51340,7 +51338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3294859362818321147}
   m_LocalRotation: {x: 0.00000006657903, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 105.27, y: 0, z: -33.38}
+  m_LocalPosition: {x: 136.3, y: 0, z: -33.38}
   m_LocalScale: {x: 1.9217396, y: 1.52245, z: 1.52245}
   m_Children: []
   m_Father: {fileID: 7333582640570166233}
@@ -55982,8 +55980,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3294859363166924144}
   m_LocalRotation: {x: 0.00000006657903, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 85.14, y: 0, z: -41.48}
-  m_LocalScale: {x: 1.4120002, y: 1.4120002, z: 1.4120002}
+  m_LocalPosition: {x: 94.3, y: 0, z: -53.2}
+  m_LocalScale: {x: 2.5955386, y: 2.5955386, z: 2.5955386}
   m_Children: []
   m_Father: {fileID: 7333582640570166233}
   m_RootOrder: 110
@@ -57699,7 +57697,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3294859363291595105}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 118.61, y: 0, z: -41.59}
+  m_LocalPosition: {x: 149.64001, y: 0, z: -41.59}
   m_LocalScale: {x: 1.5224501, y: 1.52245, z: 1.5224501}
   m_Children: []
   m_Father: {fileID: 7333582640570166233}
@@ -61930,7 +61928,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3294859363542875524}
   m_LocalRotation: {x: 0.00000006657903, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 130.58, y: 0, z: -44.36}
+  m_LocalPosition: {x: 161.61002, y: 0, z: -44.36}
   m_LocalScale: {x: 3.22525, y: 2.3308558, z: 3.22525}
   m_Children: []
   m_Father: {fileID: 7333582640570166233}
@@ -71569,7 +71567,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g_gameManager: {fileID: 4309385478446805163}
   lightBtn: {fileID: 3567291947643905700}
   lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
   lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
@@ -72953,7 +72950,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2c14222c6c5e044ac6c2b0197dffaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balcony: {fileID: 7317983407576037379}
   plankAnim: {fileID: 0}
 --- !u!95 &3567291947303558159
 Animator:
@@ -73035,7 +73031,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g_gameManager: {fileID: 4309385478446805163}
   lightBtn: {fileID: 3567291946603125565}
   lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
   lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
@@ -73135,7 +73130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a2f6c36e4bc784f9bd74846b54b15f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 4309385478446805160}
   plankToggleGo: {fileID: 3567291946914346824}
   emptyFenceToggleGo: {fileID: 3567291946625957474}
   lightFenceToggleGo: {fileID: 3567291948115633965}
@@ -73609,7 +73603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g_gameManager: {fileID: 4309385478446805163}
   lightBtn: {fileID: 3567291947011629451}
   lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
   lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
@@ -73745,7 +73738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g_gameManager: {fileID: 4309385478446805163}
   lightBtn: {fileID: 3567291946487281100}
   lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
   lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
@@ -74259,7 +74251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g_gameManager: {fileID: 4309385478446805163}
   lightBtn: {fileID: 3567291947276634251}
   lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
   lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
@@ -75079,6 +75070,7 @@ GameObject:
   - component: {fileID: 3567291947976891733}
   - component: {fileID: 1774745723}
   - component: {fileID: 3567291947976891736}
+  - component: {fileID: 3567291947976891737}
   m_Layer: 0
   m_Name: LeftHand Controller
   m_TagString: Untagged
@@ -75099,6 +75091,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3567291947976891737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291947976891735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b9b6b065342b642b73fe70e0f1d627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handModel: {fileID: 919132148898035815}
 --- !u!114 &3567291947976891738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75636,7 +75641,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g_gameManager: {fileID: 4309385478446805163}
   lightBtn: {fileID: 3567291947543420207}
   lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
   lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
@@ -75976,7 +75980,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94057f59c7753a4cb1f403d75cdc87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g_gameManager: {fileID: 4309385478446805163}
   lightBtn: {fileID: 3567291947266127022}
   lightOn: {fileID: 2100000, guid: 26f1919f4a718af42a864838ba7ebfab, type: 2}
   lightOff: {fileID: 2100000, guid: e44cba9069a8d0f4daf766bf8223aa57, type: 2}
@@ -76203,6 +76206,7 @@ GameObject:
   - component: {fileID: 3567291948255060343}
   - component: {fileID: 717113093}
   - component: {fileID: 3567291948255060302}
+  - component: {fileID: 3567291948255060303}
   m_Layer: 0
   m_Name: RightHand Controller
   m_TagString: Untagged
@@ -76223,6 +76227,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3567291948255060303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567291948255060301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b9b6b065342b642b73fe70e0f1d627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handModel: {fileID: 581547475}
 --- !u!114 &3567291948255060336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76663,12 +76680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f76bed7fc6d56e408fdd520321263c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handRight: {fileID: 581547475}
-  handLeft: {fileID: 919132148898035815}
-  rightGripIsActive: 0
-  leftGripIsActive: 0
   activate: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  select: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   triggerRightPressed: {fileID: -5610091233217446913, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   triggerLeftPressed: {fileID: 2465268631344931974, guid: c348712bda248c246b8c49b3db54643f,
@@ -76679,8 +76691,6 @@ MonoBehaviour:
     type: 3}
   _RayInteractor: {fileID: 3567291948255060337}
   menu: {fileID: 613411371864319550}
-  balcony: {fileID: 7317983407576037379}
-  gameManager: {fileID: 4309385478446805160}
 --- !u!4 &3567291948362523296
 Transform:
   m_ObjectHideFlags: 0
@@ -77309,15 +77319,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc0bae9a9d65fd4da7a7762c30aa2ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g_balcony: {fileID: 7317983407576037379}
-  g_fader: {fileID: 1438287303}
-  controlPanel: {fileID: 3567291947474485071}
+  _balcony: {fileID: 7317983407576037379}
+  _fader: {fileID: 1438287303}
+  _controlPanel: {fileID: 3567291947474485071}
   locomotionSystem: {fileID: 3567291948362523297}
   XRRig: {fileID: 3567291947779400745}
   rightHandController: {fileID: 3567291948255060301}
   leftHandController: {fileID: 3567291947976891735}
   fader: {fileID: 0}
   balcony: {fileID: 0}
+  controlPanel: {fileID: 0}
   activCabinButtons: {fileID: 114616114255279768}
   waiting: 0
   safeMode: 1
@@ -79688,11 +79699,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca11c4594e786f42867437e34cb4eae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g_cabin: {fileID: 6597788182933366734}
-  fences: {fileID: 3567291948367172120}
-  plank: {fileID: 3567291947303558148}
+  _cabin: {fileID: 6597788182933366734}
+  _fences: {fileID: 3567291948367172120}
+  _plank: {fileID: 3567291947303558148}
   controlPanel: {fileID: 3567291947474485071}
   cabin: {fileID: 0}
+  fences: {fileID: 0}
+  plank: {fileID: 0}
   isReady: 1
 --- !u!1 &7317983407576037379
 GameObject:

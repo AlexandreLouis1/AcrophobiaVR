@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Plank : MonoBehaviour
 {
-    [SerializeField] GameObject balcony;
-
     public Animator plankAnim;
+
     private AudioSource audioSource;
+    private Fences fences;
 
     private void Awake()
     {
@@ -15,9 +15,14 @@ public class Plank : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        fences = GameManager.Instance.balcony.fences;
+    }
+
     public void PlankAction()
     {
-        if (balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().fenceFull.activeSelf)
+        if (fences.fenceFull.activeSelf)
         {
             Debug.LogError("Changez de type de balcon pour pouvoir utiliser la planche");
         }
@@ -34,12 +39,23 @@ public class Plank : MonoBehaviour
                 plankAnim.SetBool("isOpen", true);
             }
 
-            balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().FenceAction();
+            fences.FenceAction();
         }
     }  
 
     public void ChangeSize(float newSize)
     {
-        balcony.GetComponent<Plank>().gameObject.transform.localScale = new Vector3(newSize, balcony.GetComponent<Plank>().gameObject.transform.localScale.y, balcony.GetComponent<Plank>().gameObject.transform.localScale.z);
+        transform.localScale = new Vector3(newSize, transform.localScale.y, transform.localScale.z);
+    }
+
+    public IEnumerator ActivePlankFromKeyboard(float waitingTime)
+    {
+        GameManager.Instance.isInputEnabled = false;
+
+        PlankAction();
+
+        yield return new WaitForSeconds(waitingTime);
+
+        GameManager.Instance.isInputEnabled = true;
     }
 }

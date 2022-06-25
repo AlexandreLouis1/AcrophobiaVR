@@ -6,17 +6,15 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Interaction : MonoBehaviour
 {
-    public GameObject handRight;
-    public GameObject handLeft;
-
-    [SerializeField] private bool rightGripIsActive = false;
-    [SerializeField] private bool leftGripIsActive = false;
+    private bool rightGripIsActive = false;
+    private bool leftGripIsActive = false;
 
     private float waitingTime = 2f;
     private int fenceType;
+    private float playerSpeed = 100;
 
     [SerializeField] InputActionReference activate;
-    [SerializeField] InputActionReference select;
+    //[SerializeField] InputActionReference select;
     [SerializeField] InputActionReference triggerRightPressed;
     [SerializeField] InputActionReference triggerLeftPressed;
     [SerializeField] InputActionReference rightHandGrip;
@@ -24,14 +22,17 @@ public class Interaction : MonoBehaviour
 
     [SerializeField] XRRayInteractor _RayInteractor;
     [SerializeField] Canvas menu;
-    [SerializeField] GameObject balcony;
-    [SerializeField] GameManager gameManager;
+
+    Fences fences;
+    GameManager gameManager;
+    Animator leftHandAnimator;
+    Animator rightHandAnimator;
 
 
     void Awake()
     {
         activate.action.performed += ButtonAction;
-        select.action.performed += ButtonMenu;
+        //select.action.performed += ButtonMenu;
         triggerRightPressed.action.started += pointingActivation;
         triggerRightPressed.action.canceled += pointingDesactivation;
         triggerLeftPressed.action.started += pointingActivation;
@@ -41,8 +42,13 @@ public class Interaction : MonoBehaviour
         leftHandGrip.action.canceled += leftSafeZoneActivationCancel;
         rightHandGrip.action.performed += rightSafeZoneActivationPerformed;
         leftHandGrip.action.performed += leftSafeZoneActivationPerformed;
+    }
 
-        gameManager = gameManager.GetComponent<GameManager>();
+    private void Start()
+    {
+        fences = GameManager.Instance.balcony.fences;
+        leftHandAnimator = GameManager.Instance.leftHandController.GetComponent<HandController>().handModel.GetComponent<Animator>();
+        rightHandAnimator = GameManager.Instance.rightHandController.GetComponent<HandController>().handModel.GetComponent<Animator>();
     }
 
     ////////////////////// CONTROLLER INPUTS //////////////////////////
@@ -68,22 +74,22 @@ public class Interaction : MonoBehaviour
     {
         if(obj.action.name == "PointingRight")
         {
-            handRight.GetComponent<Animator>().SetBool("isPointing", true);
+            rightHandAnimator.SetBool("isPointing", true);
         }
         else if(obj.action.name == "PointingLeft")
         {
-            handLeft.GetComponent<Animator>().SetBool("isPointing", true);
+            leftHandAnimator.SetBool("isPointing", true);
         }        
     }
     private void pointingDesactivation(InputAction.CallbackContext obj)
     {
         if (obj.action.name == "PointingRight")
         {
-            handRight.GetComponent<Animator>().SetBool("isPointing", false);
+            rightHandAnimator.SetBool("isPointing", false);
         }
         else if (obj.action.name == "PointingLeft")
         {
-            handLeft.GetComponent<Animator>().SetBool("isPointing", false);
+            leftHandAnimator.SetBool("isPointing", false);
         }      
     }
 
@@ -94,14 +100,11 @@ public class Interaction : MonoBehaviour
             if (ray.transform.tag == "Button")
             {
                 ray.transform.GetComponent<Button>().isOn();
-                /*if (ray.transform.GetComponent<Animator>().GetBool("isOn") == false)
-                {
-                    ray.transform.GetComponentInParent<CabinControlPanel>().ButtonActivation(ray.transform);
-                }*/
             }
         }
     }
 
+    /*
     private void ButtonMenu(InputAction.CallbackContext obj)
     {
         if (!gameManager.safeMode)
@@ -116,68 +119,69 @@ public class Interaction : MonoBehaviour
             }
         }
     }
+    */
 
     private void Update()
     {
         if (leftGripIsActive && rightGripIsActive && gameManager.isReady)
         {
-            gameManager.SafeZoneActivation();
+            GameManager.Instance.SafeModeActivation();
         }
 
         ////////////////////// KEYBOARD INPUTS //////////////////////////
         ///
 
-        if (gameManager.isInputEnabled)
+        if (GameManager.Instance.isInputEnabled)
         {
             // SAFE MODE
 
             if (Input.GetKeyDown("s"))
             {
-                gameManager.SafeModeActivation();
+                GameManager.Instance.SafeModeActivation();
             }
 
-            if (gameManager.safeMode)
+            if (GameManager.Instance.safeMode)
             {
                 // FLOOR SELECTION
-                if (Input.GetKeyDown("0"))
+                if (Input.GetKeyDown("0") && GameManager.Instance.isInputEnabled)
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 0));
+                    StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 0));
                 }
-                if (Input.GetKeyDown("1"))
+                if (Input.GetKeyDown("1") && GameManager.Instance.isInputEnabled)
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 1));
+                    StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 1));
                 }
-                if (Input.GetKeyDown("2"))
+                if (Input.GetKeyDown("2") && GameManager.Instance.isInputEnabled)
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 2));
+                    StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 2));
                 }
-                if (Input.GetKeyDown("3"))
+                if (Input.GetKeyDown("3") && GameManager.Instance.isInputEnabled)
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 3));
+                    StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 3));
                 }
-                if (Input.GetKeyDown("4"))
+                if (Input.GetKeyDown("4") && GameManager.Instance.isInputEnabled)
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 4));
+                    StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 4));
                 }
-                if (Input.GetKeyDown("5"))
+                if (Input.GetKeyDown("5") && GameManager.Instance.isInputEnabled)
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 5));
+                    StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 5));
                 }
-                if (Input.GetKeyDown("6"))
+                if (Input.GetKeyDown("6") && GameManager.Instance.isInputEnabled)
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 6));
+                    StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 6));
                 }
-                if (Input.GetKeyDown("7"))
+                if (Input.GetKeyDown("7") && GameManager.Instance.isInputEnabled)
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 7));
+                    StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 7));
                 }
-                if (Input.GetKeyDown("8"))
+                if (Input.GetKeyDown("8") && GameManager.Instance.isInputEnabled)
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 8));
+                    StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 8));
                 }
-                if (Input.GetKeyDown("9"))
+                if (Input.GetKeyDown("9") && GameManager.Instance.isInputEnabled)
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 9));
+                    StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 9));
                 }
 
                 // FENCE
@@ -185,9 +189,9 @@ public class Interaction : MonoBehaviour
                 if (Input.GetKeyDown("a"))
                 {
                     fenceType = 0;
-                    if (balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().CheckFenceState(fenceType))
+                    if (fences.CheckFenceState(fenceType))
                     {
-                        StartCoroutine(gameManager.ChangeFenceFromKeyboard(waitingTime, fenceType));
+                        StartCoroutine(GameManager.Instance.balcony.fences.ChangeFenceFromKeyboard(waitingTime, fenceType));
                     }
                     else
                     {
@@ -199,9 +203,9 @@ public class Interaction : MonoBehaviour
                 if (Input.GetKeyDown("z"))
                 {
                     fenceType = 1;
-                    if (balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().CheckFenceState(fenceType))
+                    if (fences.CheckFenceState(fenceType))
                     {
-                        StartCoroutine(gameManager.ChangeFenceFromKeyboard(waitingTime, fenceType));
+                        StartCoroutine(GameManager.Instance.balcony.fences.ChangeFenceFromKeyboard(waitingTime, fenceType));
                     }
                     else
                     {
@@ -213,9 +217,9 @@ public class Interaction : MonoBehaviour
                 if (Input.GetKeyDown("e"))
                 {
                     fenceType = 2;
-                    if (balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().CheckFenceState(fenceType))
+                    if (fences.CheckFenceState(fenceType))
                     {
-                        StartCoroutine(gameManager.ChangeFenceFromKeyboard(waitingTime, fenceType));
+                        StartCoroutine(GameManager.Instance.balcony.fences.ChangeFenceFromKeyboard(waitingTime, fenceType));
                     }
                     else
                     {
@@ -226,26 +230,54 @@ public class Interaction : MonoBehaviour
                 // PLANK
                 if (Input.GetKeyDown("p"))
                 {
-                    StartCoroutine(gameManager.ActivePlankFromKeyboard(waitingTime));
+                    StartCoroutine(GameManager.Instance.balcony.plank.ActivePlankFromKeyboard(waitingTime));
                 }
 
                 // PLAYER POSITION
-                if (Input.GetKeyDown("w") && gameManager.isReady)
+                if (Input.GetKeyDown("w") && GameManager.Instance.isReady)
                 {
-                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[0], waitingTime));
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[0], waitingTime));
                 }
-                if (Input.GetKeyDown("x") && gameManager.isReady)
+                if (Input.GetKeyDown("x") && GameManager.Instance.isReady)
                 {
-                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[1], waitingTime));
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[1], waitingTime));
                 }
-                if (Input.GetKeyDown("c") && gameManager.isReady)
+                if (Input.GetKeyDown("c") && GameManager.Instance.isReady)
                 {
-                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[2], waitingTime));
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[2], waitingTime));
                 }
-                if (Input.GetKeyDown("v") && gameManager.isReady)
+                if (Input.GetKeyDown("v") && GameManager.Instance.isReady)
                 {
-                    StartCoroutine(gameManager.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[3], waitingTime));
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[3], waitingTime));
                 }
+
+                // PLAYER MOVEMENTS
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.left * playerSpeed * Time.deltaTime);
+                }
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.right * playerSpeed * Time.deltaTime);
+                }
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.forward * playerSpeed * Time.deltaTime);
+                }
+                if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.back * playerSpeed * Time.deltaTime);
+                }
+                if (Input.GetKeyDown(KeyCode.PageUp))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.up * playerSpeed/10 * Time.deltaTime);
+                }
+                if (Input.GetKeyDown(KeyCode.PageDown))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.down * playerSpeed/10 * Time.deltaTime);
+                }
+
+
 
                 // QUIT APPLICATION
                 if (Input.GetKeyDown(KeyCode.Escape))

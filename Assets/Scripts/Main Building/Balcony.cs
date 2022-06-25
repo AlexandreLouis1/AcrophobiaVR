@@ -4,18 +4,29 @@ using UnityEngine;
 
 public class Balcony : MonoBehaviour
 {
-    public GameObject g_cabin;
-    public GameObject fences;
-    public GameObject plank;
+    public GameObject _cabin;
+    public GameObject _fences;
+    public GameObject _plank;
     public GameObject controlPanel;
 
     public Cabin cabin;
+    public Fences fences;
+    public Plank plank;
+
+    private Fader fader;
 
     public bool isReady = true;
 
     private void Awake()
     {
-        cabin = g_cabin.GetComponent<Cabin>();
+        cabin = _cabin.GetComponent<Cabin>();
+        fences = _fences.GetComponent<Fences>();
+        plank = _plank.GetComponent<Plank>();
+    }
+
+    private void Start()
+    {
+        fader = GameManager.Instance.fader;
     }
 
     public void SelectFloor(int buttonSelectedIndex)
@@ -30,16 +41,30 @@ public class Balcony : MonoBehaviour
         }
     }
 
+    public IEnumerator ChangeFloorFromKeyboard(float waitingTime, int floorNumber)
+    {
+        GameManager.Instance.isInputEnabled = false;
+
+        fader.FadeIn();
+        yield return new WaitForSeconds(waitingTime);
+
+        SelectFloor(floorNumber);
+
+        fader.FadeOut();
+        yield return new WaitForSeconds(waitingTime + waitingTime / 2);
+
+        GameManager.Instance.isInputEnabled = true;
+    }
+
     public IEnumerator ChangeFloorCoroutine(int buttonSelectedIndex)
     {
-        isReady = false;
+        GameManager.Instance.isInputEnabled = false;
         cabin.CloseCabin();
 
         while(cabin.isOpen)
         {
             yield return null;
         }
-        Debug.Log("Cabin Open");
         SelectFloor(buttonSelectedIndex);
 
         cabin.OpenCabin();
@@ -48,7 +73,6 @@ public class Balcony : MonoBehaviour
         {
             yield return null;
         }
-        Debug.Log("Cabin close");
-        isReady = true;
+        GameManager.Instance.isInputEnabled = true;
     }
 }

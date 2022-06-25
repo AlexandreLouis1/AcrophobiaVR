@@ -10,10 +10,16 @@ public class Fences : MonoBehaviour
     public GameObject balcony;
 
     private Animator fenceAnim;
+    private Fader fader;
 
     private void Awake()
     {
         fenceAnim = fenceRotationPoint.GetComponentInChildren<Animator>();
+    }
+
+    private void Start()
+    {
+        fader = GameManager.Instance.fader;
     }
 
     public void ShowFenceFull()
@@ -104,5 +110,41 @@ public class Fences : MonoBehaviour
                     return check;
                 }
         }
+    }
+
+    public IEnumerator ChangeFenceFromKeyboard(float waitingTime, int fenceType)
+    {
+        GameManager.Instance.isInputEnabled = false;
+
+        fader.FadeIn();
+        yield return new WaitForSeconds(waitingTime);
+
+        switch (fenceType)
+        {
+            case 0:
+                {
+                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().ShowFenceFull();
+                    break;
+                }
+            case 1:
+                {
+                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().ShowFenceLight();
+                    break;
+                }
+            case 2:
+                {
+                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().HideFence();
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
+
+        fader.FadeOut();
+        yield return new WaitForSeconds(waitingTime + waitingTime / 2);
+
+        GameManager.Instance.isInputEnabled = true;
     }
 }

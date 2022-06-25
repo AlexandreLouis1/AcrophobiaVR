@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ControlPanel : MonoBehaviour
 {
-    [SerializeField] GameManager gameManager;
+    private GameManager gameManager;
 
     public GameObject plankToggleGo;
     public GameObject emptyFenceToggleGo;
@@ -19,7 +19,9 @@ public class ControlPanel : MonoBehaviour
     private Toggle lightFenceToggle;
     private Toggle fullFenceToggle;
 
-    void Awake()
+    private Balcony balcony;
+
+    private void Awake()
     {
         toggleList = FindObjectsOfType<Toggle>();
 
@@ -27,49 +29,60 @@ public class ControlPanel : MonoBehaviour
         emptyFenceToggle = emptyFenceToggleGo.GetComponent<Toggle>();
         lightFenceToggle = lightFenceToggleGo.GetComponent<Toggle>();
         fullFenceToggle = fullFenceToggleGo.GetComponent<Toggle>();
+
+        gameManager = GameManager.Instance;
+    }
+
+    private void Start()
+    {
+        balcony = GameManager.Instance.balcony;
     }
 
     private void OnEnable()
     {
-        gameManager.Mute(plankToggle.onValueChanged);
-        gameManager.Mute(emptyFenceToggle.onValueChanged);
-        gameManager.Mute(lightFenceToggle.onValueChanged);
-        gameManager.Mute(fullFenceToggle.onValueChanged);
-
-        if (GetComponentInParent<Balcony>().plank.GetComponent<Plank>().plankAnim.GetBool("isOpen") == true)
+        if (GameManager.Instance)
         {
-            plankToggle.isOn = true;
-        }
-        else
-        {
-            plankToggle.isOn = false;
+            GameManager.Instance.Mute(plankToggle.onValueChanged);
+            GameManager.Instance.Mute(emptyFenceToggle.onValueChanged);
+            GameManager.Instance.Mute(lightFenceToggle.onValueChanged);
+            GameManager.Instance.Mute(fullFenceToggle.onValueChanged);
+
+            if (balcony.plank.plankAnim.GetBool("isOpen") == true)
+            {
+                plankToggle.isOn = true;
+            }
+            else
+            {
+                plankToggle.isOn = false;
+            }
+
+            if (balcony.fences.fenceFull.activeSelf)
+            {
+                fullFenceToggle.isOn = true;
+                lightFenceToggle.isOn = false;
+                emptyFenceToggle.isOn = false;
+            }
+
+            else if (balcony.fences.fenceLight.activeSelf)
+            {
+                fullFenceToggle.isOn = false;
+                lightFenceToggle.isOn = true;
+                emptyFenceToggle.isOn = false;
+            }
+
+            else
+            {
+                fullFenceToggle.isOn = false;
+                lightFenceToggle.isOn = false;
+                emptyFenceToggle.isOn = true;
+            }
+
+            GameManager.Instance.Unmute(plankToggle.onValueChanged);
+            GameManager.Instance.Unmute(emptyFenceToggle.onValueChanged);
+            GameManager.Instance.Unmute(lightFenceToggle.onValueChanged);
+            GameManager.Instance.Unmute(fullFenceToggle.onValueChanged);
         }
 
-        if (GetComponentInParent<Balcony>().fences.GetComponent<Fences>().fenceFull.activeSelf)
-        {
-            fullFenceToggle.isOn = true;
-            lightFenceToggle.isOn = false;
-            emptyFenceToggle.isOn = false;
-        }
-
-        else if (GetComponentInParent<Balcony>().fences.GetComponent<Fences>().fenceLight.activeSelf)
-        {
-            fullFenceToggle.isOn = false;
-            lightFenceToggle.isOn = true;
-            emptyFenceToggle.isOn = false;
-        }
-
-        else
-        {
-            fullFenceToggle.isOn = false;
-            lightFenceToggle.isOn = false;
-            emptyFenceToggle.isOn = true;
-        }
-
-        gameManager.Unmute(plankToggle.onValueChanged);
-        gameManager.Unmute(emptyFenceToggle.onValueChanged);
-        gameManager.Unmute(lightFenceToggle.onValueChanged);
-        gameManager.Unmute(fullFenceToggle.onValueChanged);
     }
 
     private void Update()

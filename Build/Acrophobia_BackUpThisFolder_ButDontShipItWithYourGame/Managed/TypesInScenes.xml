@@ -75,6 +75,7 @@
 		<type fullname="Fader" preserve="nothing"/>
 		<type fullname="Fences" preserve="nothing"/>
 		<type fullname="GameManager" preserve="nothing"/>
+		<type fullname="HandController" preserve="nothing"/>
 		<type fullname="Interaction" preserve="nothing"/>
 		<type fullname="MenuFollowingPlayer" preserve="nothing"/>
 		<type fullname="PedestrianNavmesh" preserve="nothing"/>

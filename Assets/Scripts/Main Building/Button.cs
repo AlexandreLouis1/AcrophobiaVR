@@ -6,7 +6,6 @@ public class Button : MonoBehaviour
 {
 
     public static List<Button> cabinButtonsList = new List<Button>();
-    public GameObject g_gameManager;
     public GameObject lightBtn;
     public Material lightOn;
     public Material lightOff;
@@ -20,13 +19,19 @@ public class Button : MonoBehaviour
 
     void Awake()
     {
-        gameManager = g_gameManager.GetComponent<GameManager>();
+        gameManager = GameManager.Instance;
         animator = GetComponent<Animator>();
+
+        if(this.name == "0")
+        {
+            animator.SetBool("isOn", true);
+            lightBtn.GetComponent<Renderer>().material = lightOn;
+        }
     }
 
     private void Update()
     {
-        if (!isTouched || !gameManager.balcony.isReady) return;
+        if (!isTouched || !GameManager.Instance.balcony.isReady) return;
         if (frameCounter < 30) frameCounter += 1;
         else if (frameCounter == 30)
         {
@@ -46,7 +51,6 @@ public class Button : MonoBehaviour
             isTouched = true;
             lightBtn.GetComponent<Renderer>().material = lightOn;
         }
-        Debug.Log(this.name);
     }
 
 
@@ -56,7 +60,7 @@ public class Button : MonoBehaviour
         {
             isTouched = false;
             frameCounter = 0;
-            if (gameManager.activCabinButtons != this)
+            if (GameManager.Instance.activCabinButtons != this)
             {
                 lightBtn.GetComponent<Renderer>().material = lightOff;
             }
@@ -65,13 +69,14 @@ public class Button : MonoBehaviour
 
     public void isOn()
     {
-        if(gameManager.activCabinButtons != null)
+        if(GameManager.Instance.activCabinButtons != null)
         {
-            gameManager.activCabinButtons.GetComponent<Button>().isOff();
+            GameManager.Instance.activCabinButtons.GetComponent<Button>().isOff();
         }
-        StartCoroutine(gameManager.balcony.ChangeFloorCoroutine(int.Parse(this.name)));
+        StartCoroutine(GameManager.Instance.balcony.ChangeFloorCoroutine(int.Parse(this.name)));
         animator.SetBool("isOn", true);
-        gameManager.activCabinButtons = this;
+        GameManager.Instance.activCabinButtons = this;
+        lightBtn.GetComponent<Renderer>().material = lightOn;
     }
 
     public void isOff()

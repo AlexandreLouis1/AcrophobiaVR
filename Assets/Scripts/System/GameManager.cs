@@ -6,9 +6,11 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject g_balcony;
-    public GameObject g_fader;
-    public GameObject controlPanel;
+    public static GameManager Instance;
+
+    [SerializeField] private GameObject _balcony;
+    [SerializeField] private GameObject _fader;
+    [SerializeField] private GameObject _controlPanel;
     public GameObject locomotionSystem;
     public GameObject XRRig;
     public GameObject rightHandController;
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     public Fader fader;
     public Balcony balcony;
+    public ControlPanel controlPanel;
 
     public Button activCabinButtons;
 
@@ -34,74 +37,16 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        fader = g_fader.GetComponent<Fader>();
-        balcony = g_balcony.GetComponent<Balcony>();
+        Instance = this;
+
+        fader = _fader.GetComponent<Fader>();
+        balcony = _balcony.GetComponent<Balcony>();
+        controlPanel = _controlPanel.GetComponent<ControlPanel>();
+
         rightHandXRRayInteractor = rightHandController.GetComponent<XRRayInteractor>();
         leftHandXRRayInteractor = leftHandController.GetComponent<XRRayInteractor>();
 
         StartCoroutine(DelayCabinAnimation());
-    }
-
-    public IEnumerator ChangeFloorFromKeyboard(float waitingTime, int floorNumber)
-    {
-        isInputEnabled = false;
-
-        fader.FadeIn();
-        yield return new WaitForSeconds(waitingTime);
-
-        balcony.GetComponent<Balcony>().SelectFloor(floorNumber);
-
-        fader.FadeOut();
-        yield return new WaitForSeconds(waitingTime + waitingTime / 2);
-
-        isInputEnabled = true;
-    }
-
-    public IEnumerator ChangeFenceFromKeyboard(float waitingTime, int fenceType)
-    {
-        isInputEnabled = false;
-
-        fader.FadeIn();
-        yield return new WaitForSeconds(waitingTime);
-
-        switch (fenceType)
-        {
-            case 0:
-                {
-                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().ShowFenceFull();
-                    break;
-                }
-            case 1:
-                {
-                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().ShowFenceLight();
-                    break;
-                }
-            case 2:
-                {
-                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().HideFence();
-                    break;
-                }
-            default:
-                {
-                    break;
-                }
-        }
-
-        fader.FadeOut();
-        yield return new WaitForSeconds(waitingTime + waitingTime / 2);
-
-        isInputEnabled = true;
-    }
-
-    public IEnumerator ActivePlankFromKeyboard(float waitingTime)
-    {
-        isInputEnabled = false;
-
-        balcony.GetComponent<Balcony>().plank.GetComponent<Plank>().PlankAction();
-
-        yield return new WaitForSeconds(waitingTime);
-
-        isInputEnabled = true;
     }
 
     public void SafeModeActivation()
@@ -110,7 +55,7 @@ public class GameManager : MonoBehaviour
         {
             safeMode = false;
             locomotionSystem.gameObject.SetActive(true);
-            controlPanel.SetActive(true);
+            controlPanel.gameObject.SetActive(true);
             rightHandXRRayInteractor.enabled = true;
             leftHandXRRayInteractor.enabled = true;
             Debug.Log("Disable safe mode");
@@ -119,7 +64,7 @@ public class GameManager : MonoBehaviour
         {
             safeMode = true;
             locomotionSystem.gameObject.SetActive(false);
-            controlPanel.SetActive(false);
+            controlPanel.gameObject.SetActive(false);
             rightHandXRRayInteractor.enabled = false;
             leftHandXRRayInteractor.enabled = false;
             Debug.Log("Enable safe mode");

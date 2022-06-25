@@ -26,8 +26,8 @@ static Il2CppMethodPointer s_methodPointers[3] =
 };
 static const int32_t s_InvokerIndices[3] = 
 {
-	2285,
-	2285,
+	2286,
+	2286,
 	1048,
 };
 extern const CustomAttributesCacheGenerator g_UnityEngine_VehiclesModule_AttributeGenerators[];
