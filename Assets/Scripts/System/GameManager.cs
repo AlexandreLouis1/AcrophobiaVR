@@ -97,6 +97,16 @@ public class GameManager : MonoBehaviour
         fader.FadeOut();
         isInputEnabled = true;
     }
+    public IEnumerator TeleportPlayerOnStairsAnchor(float waitingTime, int floorNumber)
+    {
+        isInputEnabled = false;
+
+        fader.FadeIn();
+        yield return new WaitForSeconds(waitingTime);
+        XRRig.transform.position = AnchorStairs.anchorStairsList[floorNumber].transform.position;
+        fader.FadeOut();
+        isInputEnabled = true;
+    }
 
     private IEnumerator DelayCabinAnimation()
     {

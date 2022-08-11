@@ -140,8 +140,16 @@ public class Interaction : MonoBehaviour
                 GameManager.Instance.SafeModeActivation();
             }
 
-            if (GameManager.Instance.safeMode)
+            if (GameManager.Instance.safeMode && GameManager.Instance.isInputEnabled)
             {
+                if(Input.GetKey("left ctrl"))
+                {
+                    if (Input.GetKeyDown("0"))
+                    {
+                        StartCoroutine(GameManager.Instance.TeleportPlayerOnStairsAnchor(waitingTime, 0));
+                    }
+
+                }
                 // FLOOR SELECTION
                 if (Input.GetKeyDown("0") && GameManager.Instance.isInputEnabled)
                 {
