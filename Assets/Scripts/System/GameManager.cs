@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] private GameObject _balcony;
+    [SerializeField] private GameObject _externalStairs;
     [SerializeField] private GameObject _fader;
     [SerializeField] private GameObject _controlPanel;
     public GameObject locomotionSystem;
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     public Fader fader;
     public Balcony balcony;
     public ControlPanel controlPanel;
+    public ExternalStairs externalStairs;
 
     public Button activCabinButtons;
 
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
         fader = _fader.GetComponent<Fader>();
         balcony = _balcony.GetComponent<Balcony>();
         controlPanel = _controlPanel.GetComponent<ControlPanel>();
+        externalStairs = _externalStairs.GetComponent<ExternalStairs>();
 
         rightHandXRRayInteractor = rightHandController.GetComponent<XRRayInteractor>();
         leftHandXRRayInteractor = leftHandController.GetComponent<XRRayInteractor>();
@@ -103,7 +106,17 @@ public class GameManager : MonoBehaviour
 
         fader.FadeIn();
         yield return new WaitForSeconds(waitingTime);
-        XRRig.transform.position = AnchorStairs.anchorStairsList[floorNumber].transform.position;
+        foreach(AnchorStairs anchorStairs in AnchorStairs.anchorStairsList)
+        {
+            if(anchorStairs.floorNumber == floorNumber)
+            {
+                XRRig.transform.position = anchorStairs.transform.position;
+                break;
+            }
+        }
+        externalStairs.ShowFloorFencesEasyWithoutFader();
+        externalStairs.ShowLateralFences();
+
         fader.FadeOut();
         isInputEnabled = true;
     }

@@ -50,6 +50,13 @@ public class Balcony : MonoBehaviour
 
         SelectFloor(floorNumber);
 
+        if (GameManager.Instance.balcony.plank.plankAnim.GetBool("isOpen") == true)
+        {
+            GameManager.Instance.balcony.plank.PlankAction();
+        }
+
+        GameManager.Instance.balcony.fences.ShowFenceFull();
+
         fader.FadeOut();
         yield return new WaitForSeconds(waitingTime + waitingTime / 2);
 
@@ -69,10 +76,23 @@ public class Balcony : MonoBehaviour
 
         cabin.OpenCabin();
 
+        if(GameManager.Instance.balcony.plank.plankAnim.GetBool("isOpen") == true)
+        {
+            GameManager.Instance.balcony.plank.PlankAction();
+        }
+
+        if (GameManager.Instance.balcony.fences.GetFenceAnimState())
+        {
+            GameManager.Instance.balcony.fences.FenceAction();
+        }
+
+        GameManager.Instance.balcony.fences.ShowFenceFull();
+
         while (!cabin.isOpen)
         {
             yield return null;
         }
+
         GameManager.Instance.isInputEnabled = true;
     }
 }

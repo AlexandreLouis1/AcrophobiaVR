@@ -59,6 +59,11 @@ public class Fences : MonoBehaviour
         }
     }
 
+    public bool GetFenceAnimState()
+    {
+        return fenceAnim.GetBool("isOpen");
+    }
+
     public bool CheckFenceState(int typeOfFence)
     {
         bool check;
