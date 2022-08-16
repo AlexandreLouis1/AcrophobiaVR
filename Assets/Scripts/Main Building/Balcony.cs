@@ -49,6 +49,7 @@ public class Balcony : MonoBehaviour
         yield return new WaitForSeconds(waitingTime);
 
         SelectFloor(floorNumber);
+        GameManager.Instance.XRRig.transform.position = PlayerAnchor.playerAnchorList[2].transform.position;
 
         if (GameManager.Instance.balcony.plank.plankAnim.GetBool("isOpen") == true)
         {
