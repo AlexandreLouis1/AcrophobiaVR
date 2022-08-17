@@ -22,8 +22,10 @@ By using oculus controller (patient's way of action), but you can only interact 
 
 # Inputs
 For keyboard =>
-Change floor : numeric keys (1 to 7)
 Enable/disable safe mode : "S"
+Change floor : numeric keys (1 to 7)
+Change external stairs' floor : "left ctrl" + numeric keys (1 to 7)
+Change external stairs' fences type : "left ctrl" + "A" (easy floor fences) or "Z" (hard floor fences) or "E" (show/hide lateral fences)
 Change fence type : "A" (full fence) "Z" (light fence) "E" (hide fence)
 Deploy plank : "P" (doesn't work if the fence is in "full" type)
 Teleport player at differents locations : "W" "X" "C" "V" (c teleport to the elevator)
