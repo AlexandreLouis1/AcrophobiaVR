@@ -476,12 +476,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activate: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  select: {fileID: 0}
+  triggerRightPressed: {fileID: 0}
+  triggerLeftPressed: {fileID: 0}
+  rightHandGrip: {fileID: 0}
+  leftHandGrip: {fileID: 0}
   _RayInteractor: {fileID: 4996192478242998274}
   menu: {fileID: 0}
-  controlPanel: {fileID: 0}
-  gameManager: {fileID: 0}
-  fader: {fileID: 0}
 --- !u!1 &4996192478369954150
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,56 +6,104 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Interaction : MonoBehaviour
 {
+    private bool rightGripIsActive = false;
+    private bool leftGripIsActive = false;
+
     private float waitingTime = 2f;
     private int fenceType;
+    private float playerSpeed = 100;
 
     [SerializeField] InputActionReference activate;
-    [SerializeField] InputActionReference select;
-    [SerializeField] InputActionReference handGrip;
+    //[SerializeField] InputActionReference select;
+    [SerializeField] InputActionReference triggerRightPressed;
+    [SerializeField] InputActionReference triggerLeftPressed;
+    [SerializeField] InputActionReference rightHandGrip;
+    [SerializeField] InputActionReference leftHandGrip;
 
     [SerializeField] XRRayInteractor _RayInteractor;
     [SerializeField] Canvas menu;
-    [SerializeField] GameObject balcony;
-    [SerializeField] GameManager gameManager;
+
+    Fences fences;
+    Animator leftHandAnimator;
+    Animator rightHandAnimator;
 
 
     void Awake()
     {
         activate.action.performed += ButtonAction;
-        select.action.performed += ButtonMenu;
-        handGrip.action.performed += SafeZoneActivation;
+        //select.action.performed += ButtonMenu;
+        triggerRightPressed.action.started += pointingActivation;
+        triggerRightPressed.action.canceled += pointingDesactivation;
+        triggerLeftPressed.action.started += pointingActivation;
+        triggerLeftPressed.action.canceled += pointingDesactivation;
 
-        gameManager = gameManager.GetComponent<GameManager>();
+        rightHandGrip.action.canceled += rightSafeZoneActivationCancel;
+        leftHandGrip.action.canceled += leftSafeZoneActivationCancel;
+        rightHandGrip.action.performed += rightSafeZoneActivationPerformed;
+        leftHandGrip.action.performed += leftSafeZoneActivationPerformed;
     }
 
-         ////////////////////// CONTROLLER INPUTS //////////////////////////
-
-    private void SafeZoneActivation(InputAction.CallbackContext obj)
+    private void Start()
     {
-        if (gameManager.fader.GetComponent<Fader>().newColor2.a == 1)
+        fences = GameManager.Instance.balcony.fences;
+        leftHandAnimator = GameManager.Instance.leftHandController.GetComponent<HandController>().handModel.GetComponent<Animator>();
+        rightHandAnimator = GameManager.Instance.rightHandController.GetComponent<HandController>().handModel.GetComponent<Animator>();
+    }
+
+    ////////////////////// CONTROLLER INPUTS //////////////////////////
+
+    private void rightSafeZoneActivationCancel(InputAction.CallbackContext obj)
+    {
+        rightGripIsActive = false;
+    }
+    private void leftSafeZoneActivationCancel(InputAction.CallbackContext obj)
+    {
+        leftGripIsActive = false;
+    }
+    private void rightSafeZoneActivationPerformed(InputAction.CallbackContext obj)
+    {
+        rightGripIsActive = true;
+    }
+    private void leftSafeZoneActivationPerformed(InputAction.CallbackContext obj)
+    {
+        leftGripIsActive = true;
+    }
+
+    private void pointingActivation(InputAction.CallbackContext obj)
+    {
+        if(obj.action.name == "PointingRight")
         {
-            gameManager.fader.GetComponent<Fader>().FadeOut();
+            rightHandAnimator.SetBool("isPointing", true);
         }
-        if (gameManager.fader.GetComponent<Fader>().newColor2.a == 0)
+        else if(obj.action.name == "PointingLeft")
         {
-            gameManager.fader.GetComponent<Fader>().FadeIn();
+            leftHandAnimator.SetBool("isPointing", true);
+        }        
+    }
+    private void pointingDesactivation(InputAction.CallbackContext obj)
+    {
+        if (obj.action.name == "PointingRight")
+        {
+            rightHandAnimator.SetBool("isPointing", false);
         }
+        else if (obj.action.name == "PointingLeft")
+        {
+            leftHandAnimator.SetBool("isPointing", false);
+        }      
     }
 
     private void ButtonAction(InputAction.CallbackContext obj)
     {
         if (_RayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit ray))
         {
-            if (ray.transform.name == "Button")
+            if (ray.transform.tag == "Button")
             {
-                if (ray.transform.GetComponent<Animator>().GetBool("isOn") == false)
-                {
-                    ray.transform.GetComponentInParent<CabinControlPanel>().ButtonActivation(ray.transform);
-                }
+                ray.transform.GetComponent<Button>().isOn();
             }
         }
     }
 
+    /*
     private void ButtonMenu(InputAction.CallbackContext obj)
     {
         if (!gameManager.safeMode)
@@ -70,73 +118,135 @@ public class Interaction : MonoBehaviour
             }
         }
     }
+    */
 
     private void Update()
     {
-            ////////////////////// KEYBOARD INPUTS //////////////////////////
-            ///
+        if (leftGripIsActive && rightGripIsActive && GameManager.Instance.isReady)
+        {
+            GameManager.Instance.SafeZoneActivation();
+        }
 
-        if (gameManager.isInputEnabled)
+        ////////////////////// KEYBOARD INPUTS //////////////////////////
+        ///
+
+        if (GameManager.Instance.isInputEnabled)
         {
             // SAFE MODE
 
             if (Input.GetKeyDown("s"))
             {
-                gameManager.SafeModeActivation();
+                GameManager.Instance.SafeModeActivation();
             }
 
-            if (gameManager.safeMode)
+            if (GameManager.Instance.safeMode && GameManager.Instance.isInputEnabled)
             {
+                // STAIRS FLOOR SELECTION
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha0))
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnStairsAnchor(waitingTime, 0));
+                }
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnStairsAnchor(waitingTime, 1));
+                }
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnStairsAnchor(waitingTime, 2));
+                }
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnStairsAnchor(waitingTime, 3));
+                }
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnStairsAnchor(waitingTime, 4));
+                }
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha5))
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnStairsAnchor(waitingTime, 5));
+                }
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha6))
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnStairsAnchor(waitingTime, 6));
+                }
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha7))
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnStairsAnchor(waitingTime, 7));
+                }
+
                 // FLOOR SELECTION
-                if (Input.GetKeyDown("0"))
+                if (!Input.GetKey(KeyCode.LeftControl))
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 0));
+                    if (Input.GetKeyDown("0") && GameManager.Instance.isInputEnabled)
+                    {
+                        StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 0));
+                    }
+                    if (Input.GetKeyDown("1") && GameManager.Instance.isInputEnabled)
+                    {
+                        StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 1));
+                    }
+                    if (Input.GetKeyDown("2") && GameManager.Instance.isInputEnabled)
+                    {
+                        StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 2));
+                    }
+                    if (Input.GetKeyDown("3") && GameManager.Instance.isInputEnabled)
+                    {
+                        StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 3));
+                    }
+                    if (Input.GetKeyDown("4") && GameManager.Instance.isInputEnabled)
+                    {
+                        StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 4));
+                    }
+                    if (Input.GetKeyDown("5") && GameManager.Instance.isInputEnabled)
+                    {
+                        StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 5));
+                    }
+                    if (Input.GetKeyDown("6") && GameManager.Instance.isInputEnabled)
+                    {
+                        StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 6));
+                    }
+                    if (Input.GetKeyDown("7") && GameManager.Instance.isInputEnabled)
+                    {
+                        StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 7));
+                    }
+                    if (Input.GetKeyDown("8") && GameManager.Instance.isInputEnabled)
+                    {
+                        StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 8));
+                    }
+                    if (Input.GetKeyDown("9") && GameManager.Instance.isInputEnabled)
+                    {
+                        StartCoroutine(GameManager.Instance.balcony.ChangeFloorFromKeyboard(waitingTime, 9));
+                    }
                 }
-                if (Input.GetKeyDown("1"))
+
+                // EXTERNAL STAIRS
+                //SHOW FLOOR FENCES LIGHT
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.A))
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 1));
+                    StartCoroutine(GameManager.Instance.externalStairs.ShowFloorFencesEasy());
                 }
-                if (Input.GetKeyDown("2"))
+
+                //SHOW FLOOR FENCES FULL
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z))
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 2));
+                    StartCoroutine(GameManager.Instance.externalStairs.ShowFloorFencesHard());
                 }
-                if (Input.GetKeyDown("3"))
+
+                //SHOW/HIDE LATERAL FENCES
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.E))
                 {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 3));
-                }
-                if (Input.GetKeyDown("4"))
-                {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 4));
-                }
-                if (Input.GetKeyDown("5"))
-                {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 5));
-                }
-                if (Input.GetKeyDown("6"))
-                {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 6));
-                }
-                if (Input.GetKeyDown("7"))
-                {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 7));
-                }
-                if (Input.GetKeyDown("8"))
-                {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 8));
-                }
-                if (Input.GetKeyDown("9"))
-                {
-                    StartCoroutine(gameManager.ChangeFloorFromKeyboard(waitingTime, 9));
+                    StartCoroutine(GameManager.Instance.externalStairs.LateralFencesAction());
                 }
 
                 // FENCE
                 //SHOW FULL FENCE
-                if (Input.GetKeyDown("a"))
+                if (Input.GetKeyDown("a") && !Input.GetKey(KeyCode.LeftControl))
                 {
                     fenceType = 0;
-                    if (balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().CheckFenceState(fenceType))
+                    if (fences.CheckFenceState(fenceType))
                     {
-                        StartCoroutine(gameManager.ChangeFenceFromKeyboard(waitingTime, fenceType));
+                        StartCoroutine(GameManager.Instance.balcony.fences.ChangeFenceFromKeyboard(waitingTime, fenceType));
                     }
                     else
                     {
@@ -145,12 +255,12 @@ public class Interaction : MonoBehaviour
                 }
 
                 //SHOW LIGHT FENCE
-                if (Input.GetKeyDown("z"))
+                if (Input.GetKeyDown("z") && !Input.GetKey(KeyCode.LeftControl))
                 {
                     fenceType = 1;
-                    if (balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().CheckFenceState(fenceType))
+                    if (fences.CheckFenceState(fenceType))
                     {
-                        StartCoroutine(gameManager.ChangeFenceFromKeyboard(waitingTime, fenceType));
+                        StartCoroutine(GameManager.Instance.balcony.fences.ChangeFenceFromKeyboard(waitingTime, fenceType));
                     }
                     else
                     {
@@ -159,12 +269,12 @@ public class Interaction : MonoBehaviour
                 }
 
                 //HIDE FENCE
-                if (Input.GetKeyDown("e"))
+                if (Input.GetKeyDown("e") && !Input.GetKey(KeyCode.LeftControl))
                 {
                     fenceType = 2;
-                    if (balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().CheckFenceState(fenceType))
+                    if (fences.CheckFenceState(fenceType))
                     {
-                        StartCoroutine(gameManager.ChangeFenceFromKeyboard(waitingTime, fenceType));
+                        StartCoroutine(GameManager.Instance.balcony.fences.ChangeFenceFromKeyboard(waitingTime, fenceType));
                     }
                     else
                     {
@@ -175,10 +285,69 @@ public class Interaction : MonoBehaviour
                 // PLANK
                 if (Input.GetKeyDown("p"))
                 {
-                    StartCoroutine(gameManager.ActivePlankFromKeyboard(waitingTime));
+                    StartCoroutine(GameManager.Instance.balcony.plank.ActivePlankFromKeyboard(waitingTime));
+                }
+
+                // PLAYER POSITION ON BALCONY
+                if (Input.GetKeyDown("w") && GameManager.Instance.isReady)
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[0], waitingTime));
+                }
+                if (Input.GetKeyDown("x") && GameManager.Instance.isReady)
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[1], waitingTime));
+                }
+                if (Input.GetKeyDown("c") && GameManager.Instance.isReady)
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[2], waitingTime));
+                }
+                if (Input.GetKeyDown("v") && GameManager.Instance.isReady)
+                {
+                    StartCoroutine(GameManager.Instance.TeleportPlayerOnAnchor(PlayerAnchor.playerAnchorList[3], waitingTime));
+                }
+
+                // PLAYER MOVEMENTS
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.left * playerSpeed * Time.deltaTime);
+                }
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.right * playerSpeed * Time.deltaTime);
+                }
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.forward * playerSpeed * Time.deltaTime);
+                }
+                if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.back * playerSpeed * Time.deltaTime);
+                }
+                if (Input.GetKeyDown(KeyCode.PageUp))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.up * playerSpeed/10 * Time.deltaTime);
+                }
+                if (Input.GetKeyDown(KeyCode.PageDown))
+                {
+                    GameManager.Instance.XRRig.transform.Translate(Vector3.down * playerSpeed/10 * Time.deltaTime);
+                }
+
+                // QUIT APPLICATION
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    Application.Quit();
                 }
             }
         } 
     }
 }
-    
+
+
+
+
+
+
+
+
+
+

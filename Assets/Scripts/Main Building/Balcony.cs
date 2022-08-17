@@ -4,87 +4,96 @@ using UnityEngine;
 
 public class Balcony : MonoBehaviour
 {
-    public GameObject cabin;
-    public GameObject anchorList;
-    public GameObject fences;
-    public GameObject plank;
+    public GameObject _cabin;
+    public GameObject _fences;
+    public GameObject _plank;
     public GameObject controlPanel;
 
-    public int numOfFloor;
+    public Cabin cabin;
+    public Fences fences;
+    public Plank plank;
 
-    public void SelectFloor(int numOfFloor)
+    private Fader fader;
+
+    public bool isReady = true;
+
+    private void Awake()
     {
-        switch (numOfFloor)
+        cabin = _cabin.GetComponent<Cabin>();
+        fences = _fences.GetComponent<Fences>();
+        plank = _plank.GetComponent<Plank>();
+    }
+
+    private void Start()
+    {
+        fader = GameManager.Instance.fader;
+    }
+
+    public void SelectFloor(int buttonSelectedIndex)
+    {
+        foreach (Anchor anchor in Anchor.anchorList)
         {
-            case 0:
-                transform.position = anchorList.GetComponentInChildren<Transform>().GetChild(1).position;
-                cabin.transform.position = anchorList.GetComponentInChildren<Transform>().Find("AnchorCabinToBalcony").position;
-                break;
-
-            case 1:
-                transform.position = anchorList.GetComponentInChildren<Transform>().GetChild(1).position;
-                cabin.transform.position = GetComponentInChildren<Transform>().Find("CabinAnchor").position;
-                break;
-
-            case 2:
-                transform.position = anchorList.GetComponentInChildren<Transform>().GetChild(2).position;
-                cabin.transform.position = GetComponentInChildren<Transform>().Find("CabinAnchor").position;
-                break;
-
-            case 3:
-                transform.position = anchorList.GetComponentInChildren<Transform>().GetChild(3).position;
-                cabin.transform.position = GetComponentInChildren<Transform>().Find("CabinAnchor").position;
-                break;
-
-            case 4:
-                transform.position = anchorList.GetComponentInChildren<Transform>().GetChild(4).position;
-                cabin.transform.position = GetComponentInChildren<Transform>().Find("CabinAnchor").position;
-                break;
-
-            case 5:
-                transform.position = anchorList.GetComponentInChildren<Transform>().GetChild(5).position;
-                cabin.transform.position = GetComponentInChildren<Transform>().Find("CabinAnchor").position;
-                break;
-
-            case 6:
-                transform.position = anchorList.GetComponentInChildren<Transform>().GetChild(6).position;
-                cabin.transform.position = GetComponentInChildren<Transform>().Find("CabinAnchor").position;
-                break;
-
-            case 7:
-                transform.position = anchorList.GetComponentInChildren<Transform>().GetChild(6).position;
-                cabin.transform.position = GetComponentInChildren<Transform>().Find("CabinAnchor").position;
-                break;
-
-            case 8:
-                transform.position = anchorList.GetComponentInChildren<Transform>().GetChild(6).position;
-                cabin.transform.position = GetComponentInChildren<Transform>().Find("CabinAnchor").position;
-                break;
-
-            case 9:
-                transform.position = anchorList.GetComponentInChildren<Transform>().GetChild(6).position;
-                cabin.transform.position = GetComponentInChildren<Transform>().Find("CabinAnchor").position;
-                break;
-
-            default:
-                break;
+            if(anchor.floorNumber == buttonSelectedIndex)
+            {
+                transform.position = anchor.transform.position;
+                return;
+            }
         }
     }
 
-    private IEnumerator ChangeFloorCoroutine()
+    public IEnumerator ChangeFloorFromKeyboard(float waitingTime, int floorNumber)
     {
-        cabin.GetComponent<Cabin>().CloseCabin();
+        GameManager.Instance.isInputEnabled = false;
 
-        yield return new WaitForSeconds(3);
+        fader.FadeIn();
+        yield return new WaitForSeconds(waitingTime);
 
-        SelectFloor(numOfFloor);
+        SelectFloor(floorNumber);
+        GameManager.Instance.XRRig.transform.position = PlayerAnchor.playerAnchorList[2].transform.position;
 
-        cabin.GetComponent<Cabin>().OpenCabin();
+        if (GameManager.Instance.balcony.plank.plankAnim.GetBool("isOpen") == true)
+        {
+            GameManager.Instance.balcony.plank.PlankAction();
+        }
+
+        GameManager.Instance.balcony.fences.ShowFenceFull();
+
+        fader.FadeOut();
+        yield return new WaitForSeconds(waitingTime + waitingTime / 2);
+
+        GameManager.Instance.isInputEnabled = true;
     }
 
-    public void ChangeFloor(int buttonSelectedIndex)
+    public IEnumerator ChangeFloorCoroutine(int buttonSelectedIndex)
     {
-        numOfFloor = buttonSelectedIndex;
-        StartCoroutine(ChangeFloorCoroutine());
+        GameManager.Instance.isInputEnabled = false;
+        cabin.CloseCabin();
+
+        while(cabin.isOpen)
+        {
+            yield return null;
+        }
+        SelectFloor(buttonSelectedIndex);
+
+        cabin.OpenCabin();
+
+        if(GameManager.Instance.balcony.plank.plankAnim.GetBool("isOpen") == true)
+        {
+            GameManager.Instance.balcony.plank.PlankAction();
+        }
+
+        if (GameManager.Instance.balcony.fences.GetFenceAnimState())
+        {
+            GameManager.Instance.balcony.fences.FenceAction();
+        }
+
+        GameManager.Instance.balcony.fences.ShowFenceFull();
+
+        while (!cabin.isOpen)
+        {
+            yield return null;
+        }
+
+        GameManager.Instance.isInputEnabled = true;
     }
 }

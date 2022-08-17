@@ -1,79 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject balcony;
-    public GameObject fader;
-    public GameObject controlPanel;
+    public static GameManager Instance;
+
+    [SerializeField] private GameObject _balcony;
+    [SerializeField] private GameObject _externalStairs;
+    [SerializeField] private GameObject _fader;
+    [SerializeField] private GameObject _controlPanel;
     public GameObject locomotionSystem;
+    public GameObject XRRig;
+    public GameObject rightHandController;
+    public GameObject leftHandController;
+
+    private XRRayInteractor rightHandXRRayInteractor;
+    private XRRayInteractor leftHandXRRayInteractor;
+
+    public Fader fader;
+    public Balcony balcony;
+    public ControlPanel controlPanel;
+    public ExternalStairs externalStairs;
+
+    public Button activCabinButtons;
 
     public bool waiting = false;
     public bool safeMode = true;
     public bool isInputEnabled = true;
 
-    public IEnumerator ChangeFloorFromKeyboard(float waitingTime, int floorNumber)
+    public bool isReady = true;
+    public float timeToWait;
+
+    private float time = 0;
+
+
+    private void Awake()
     {
-        isInputEnabled = false;
+        Instance = this;
 
-        fader.GetComponent<Fader>().FadeIn();
-        yield return new WaitForSeconds(waitingTime);
+        fader = _fader.GetComponent<Fader>();
+        balcony = _balcony.GetComponent<Balcony>();
+        controlPanel = _controlPanel.GetComponent<ControlPanel>();
+        externalStairs = _externalStairs.GetComponent<ExternalStairs>();
 
-        balcony.GetComponent<Balcony>().SelectFloor(floorNumber);
+        rightHandXRRayInteractor = rightHandController.GetComponent<XRRayInteractor>();
+        leftHandXRRayInteractor = leftHandController.GetComponent<XRRayInteractor>();
 
-        fader.GetComponent<Fader>().FadeOut();
-        yield return new WaitForSeconds(waitingTime + waitingTime / 2);
-
-        isInputEnabled = true;
-    }
-
-    public IEnumerator ChangeFenceFromKeyboard(float waitingTime, int fenceType)
-    {
-        isInputEnabled = false;
-
-        fader.GetComponent<Fader>().FadeIn();
-        yield return new WaitForSeconds(waitingTime);
-
-        switch (fenceType)
-        {
-            case 0:
-                {
-                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().ShowFenceFull();
-                    break;
-                }
-            case 1:
-                {
-                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().ShowFenceLight();
-                    break;
-                }
-            case 2:
-                {
-                    balcony.GetComponent<Balcony>().fences.GetComponent<Fences>().HideFence();
-                    break;
-                }
-            default:
-                {
-                    break;
-                }
-        }
-
-        fader.GetComponent<Fader>().FadeOut();
-        yield return new WaitForSeconds(waitingTime + waitingTime / 2);
-
-        isInputEnabled = true;
-    }
-
-    public IEnumerator ActivePlankFromKeyboard(float waitingTime)
-    {
-        isInputEnabled = false;
-
-        balcony.GetComponent<Balcony>().plank.GetComponent<Plank>().PlankAction();
-
-        yield return new WaitForSeconds(waitingTime);
-
-        isInputEnabled = true;
+        StartCoroutine(DelayCabinAnimation());
     }
 
     public void SafeModeActivation()
@@ -82,18 +58,74 @@ public class GameManager : MonoBehaviour
         {
             safeMode = false;
             locomotionSystem.gameObject.SetActive(true);
-            controlPanel.SetActive(true);
+            controlPanel.gameObject.SetActive(true);
+            rightHandXRRayInteractor.enabled = true;
+            leftHandXRRayInteractor.enabled = true;
             Debug.Log("Disable safe mode");
         }
         else
         {
             safeMode = true;
             locomotionSystem.gameObject.SetActive(false);
-            controlPanel.SetActive(false);
+            controlPanel.gameObject.SetActive(false);
+            rightHandXRRayInteractor.enabled = false;
+            leftHandXRRayInteractor.enabled = false;
             Debug.Log("Enable safe mode");
         }
     }
 
+    public void SafeZoneActivation()
+    {
+        isReady = false;
+        time = 0;
+        timeToWait = 3;
+
+        if (fader.newColor2.a == 1)
+        {
+            fader.FadeOut();
+        }
+        if (fader.newColor2.a == 0)
+        {
+            fader.FadeIn();
+        }
+    }
+
+    public IEnumerator TeleportPlayerOnAnchor(PlayerAnchor playerAnchor, float waitingTime)
+    {
+        isInputEnabled = false;
+
+        fader.FadeIn();
+        yield return new WaitForSeconds(waitingTime);
+        XRRig.transform.position = playerAnchor.transform.position;
+        fader.FadeOut();
+        isInputEnabled = true;
+    }
+    public IEnumerator TeleportPlayerOnStairsAnchor(float waitingTime, int floorNumber)
+    {
+        isInputEnabled = false;
+
+        fader.FadeIn();
+        yield return new WaitForSeconds(waitingTime);
+        foreach(AnchorStairs anchorStairs in AnchorStairs.anchorStairsList)
+        {
+            if(anchorStairs.floorNumber == floorNumber)
+            {
+                XRRig.transform.position = anchorStairs.transform.position;
+                break;
+            }
+        }
+        externalStairs.ShowFloorFencesEasyWithoutFader();
+        externalStairs.ShowLateralFences();
+
+        fader.FadeOut();
+        isInputEnabled = true;
+    }
+
+    private IEnumerator DelayCabinAnimation()
+    {
+        yield return new WaitForSeconds(1);
+        balcony.cabin.ActivateAnimator();
+    }
 
     // Allow to enable/disable OnValueChange function, so we can edit toggles of control pannel without trigger the function
     /////////////////
@@ -117,4 +149,17 @@ public class GameManager : MonoBehaviour
     }
 
     /////////////////
+
+
+    private void Update()
+    {
+        if (!isReady)
+        {
+            time += Time.deltaTime;
+            if(time > 3)
+            {
+                isReady = true;
+            }
+        }
+    }
 }

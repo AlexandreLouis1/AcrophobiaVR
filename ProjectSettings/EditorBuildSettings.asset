@@ -6,11 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 2e410aed6c6b5d442b7533ed638b0d24
-  - enabled: 1
     path: Assets/Scenes/Acrophobia.unity
-    guid: b9933f9ebb386184eacf2cda2d0ba010
+    guid: 3d6b665948f4980489bfa7abc1719081
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260,
       type: 2}

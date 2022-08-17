@@ -1,6 +1,8 @@
 # AcrophobiaVR
 Made with Unity3D ver. 2020.3.16f1
-by Alexandre Louis & Paul Crépin
+by
+Alexandre Louis
+Paul Crepin
 
 # Introduction
 
