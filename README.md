@@ -11,6 +11,8 @@ A prototype of VR environment to the use of clinical psychologists to assist pat
 Exclusively compatible with Oculus Quest.
 
 # Precautions
+If you are affected by acrophobia, please don't use this software without a clinical accompagnment.
+
 Virtual reality can cause fatigue in some people, rest before taking the car
 Photosensitive epilepsy : if you have a history of epilepsy and convultions consult a doctor before use
 
