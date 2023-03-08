@@ -33,3 +33,9 @@ Oculus controllers =>
 Teleportation : left thumbstick
 Use finger to hit elevator's buttons : controller's trigger
 Active safe zone : press both left and right handgrip
+
+# Assets
+Classic Downtown
+https://assetstore.unity.com/packages/3d/environments/urban/classic-downtown-184370
+Auto Hand - VR Physics Interaction
+https://assetstore.unity.com/packages/tools/game-toolkits/auto-hand-vr-physics-interaction-165323
