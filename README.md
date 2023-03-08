@@ -39,3 +39,5 @@ Classic Downtown
 https://assetstore.unity.com/packages/3d/environments/urban/classic-downtown-184370
 Auto Hand - VR Physics Interaction
 https://assetstore.unity.com/packages/tools/game-toolkits/auto-hand-vr-physics-interaction-165323
+Simple Button Set 01
+https://assetstore.unity.com/packages/2d/gui/icons/simple-button-set-01-153979
